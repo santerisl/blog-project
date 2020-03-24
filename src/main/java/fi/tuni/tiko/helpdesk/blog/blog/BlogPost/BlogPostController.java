@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 import javax.annotation.PostConstruct;
 
+@CrossOrigin
 @RestController
 public class BlogPostController {
 
@@ -22,7 +23,7 @@ public class BlogPostController {
         }
     }
     
-    @PostMapping(value = "/api/posts")
+    @PostMapping(value = "/api/posts/")
     public void addBlogPost(@RequestBody BlogPost post) {
         blogPostRepository.save(post);
     }
