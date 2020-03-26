@@ -15,6 +15,8 @@ public class BlogPost {
 
     private String title;
 
+    private String brief;
+
     @Lob
     private String content;
 
@@ -26,9 +28,10 @@ public class BlogPost {
 
     public BlogPost() {}
 
-    public BlogPost(String author, String title, String content, int likes, LocalDateTime date, LocalDateTime modifiedDate) {
+    public BlogPost(String author, String title, String brief, String content, int likes, LocalDateTime date, LocalDateTime modifiedDate) {
         this.author = author;
         this.title = title;
+        this.brief = brief;
         this.content = content;
         this.likes = likes;
         this.date = date;
@@ -59,12 +62,28 @@ public class BlogPost {
         this.title = title;
     }
 
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
     public LocalDateTime getDate() {

@@ -34,8 +34,8 @@ public class BlogPostGenerator {
         return name;
     }
 
-    private static String createTitle() {
-        int wCount = (int) (Math.random() * 20) + 4;
+    private static String createTitle(int min, int max) {
+        int wCount = (int) (Math.random() * max) + min;
         String title = "";
         while(wCount >= 0) {
             title += words[(int)(Math.random() * words.length)];
@@ -59,7 +59,8 @@ public class BlogPostGenerator {
     public static BlogPost create() {
         return new BlogPost(
             createAuthor(),
-            createTitle(),
+            createTitle(4, 10),
+            createTitle(12, 22),
             createContent(),
             (int)(Math.random() * 100),
             LocalDateTime.now(),
