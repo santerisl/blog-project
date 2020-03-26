@@ -1,0 +1,47 @@
+.Post {
+    max-width: 1000px;
+    padding: 1rem;
+    margin: 0.5rem auto;
+    margin-top: 2rem;
+    border-radius: 2px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    background-color: #FAFAFA;
+}
+
+.PostHeader, .PostTitle, .PostDate, .PostContent, .Post, .PostAuthor {
+    outline: 0;
+}
+
+.PostHeader {
+    display: flex;
+    padding: .5rem;
+    line-height: 2rem;
+}
+
+.PostTitle {
+    flex: 1 0;
+    display: inline-block;
+    font-size: 2rem;
+    
+}
+
+.PostDate {
+    flex: 0;
+    color:#444;
+    font-weight: bold;
+}
+
+.PostAuthor {
+    display: block;
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #444;
+    margin-left: .5rem;
+}
+
+.PostContent {
+    font-size: 1.1rem;
+    line-height: 1.6rem;
+    padding: .5rem;
+    white-space: pre-line;
+}
