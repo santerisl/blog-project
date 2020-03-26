@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface BlogPostRepository extends CrudRepository<BlogPost, Long> {
 
-    List<BlogPost> findAll();
+    List<BlogPost> findAllByOrderByDateDesc();
 
 }
