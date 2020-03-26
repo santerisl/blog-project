@@ -1,9 +1,11 @@
 import React from 'react';
 
+import './Posts.css'
+
+
 const fetchPosts = async () => {
   const hr = await fetch('http://localhost:8080/api/posts/')
   const data = await hr.json();
-  console.log(data)
   return data
 }
 
@@ -18,19 +20,16 @@ class Posts extends React.Component {
   }
 
   renderPost = post => {
+    const date = new Date(post.date).toLocaleDateString('fi-FI')
     return (
-      <div key={post.id} className="blog-post">
-        <h2>{post.title}</h2>
-        <div className="post-date">
-          Posted: {post.date}
+      <article key={post.id} className="Post">
+        <div className="PostHeader">
+          <h1 className="PostTitle">{post.title}</h1>
+          <div className="PostDate">{date}</div>
         </div>
-        <div className="post-author">
-          By: {post.author}
-        </div>
-        <p className="post-content">
-          {post.content}
-        </p>
-      </div>
+        <div className="PostAuthor">{post.author}</div>
+        <div className="PostContent">{post.content}</div>
+      </article>
     )
   }
 
