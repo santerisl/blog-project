@@ -3,8 +3,6 @@ package fi.tuni.tiko.helpdesk.blog.blog.BlogPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-
 import javax.annotation.PostConstruct;
 
 @CrossOrigin
@@ -17,9 +15,7 @@ public class BlogPostController {
     @PostConstruct
     public void initialize() {
         for(int i = 0; i < 10; i++) {
-            BlogPost p = new BlogPost("Author", "Title " + i, "Content", 1,
-                    LocalDateTime.now(), null);
-                blogPostRepository.save(p);
+            blogPostRepository.save(BlogPostGenerator.create());
         }
     }
     

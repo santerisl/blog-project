@@ -15,6 +15,7 @@ public class BlogPost {
 
     private String title;
 
+    @Lob
     private String content;
 
     private int likes;
