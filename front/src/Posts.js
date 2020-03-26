@@ -4,7 +4,7 @@ import './Posts.css'
 
 
 const fetchPosts = async () => {
-  const hr = await fetch('http://localhost:8080/api/posts/')
+  const hr = await fetch('/api/posts/')
   const data = await hr.json();
   return data
 }
