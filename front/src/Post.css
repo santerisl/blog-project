@@ -8,10 +8,6 @@
     background-color: #FAFAFA;
 }
 
-.PostHeader, .PostTitle, .PostDate, .PostContent, .Post, .PostAuthor {
-    outline: 0;
-}
-
 .PostHeader {
     display: flex;
     padding: .5rem;
