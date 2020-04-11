@@ -7,6 +7,7 @@ import AppHeader from './AppHeader.js';
 import PostList from './PostList.js';
 import Post from './Post.js';
 import LoginForm from './Login.js';
+import PostForm from './PostForm.js';
 
 import './App.css'
 
@@ -21,6 +22,7 @@ class App extends Component {
             <Route exact={true} path="/" component={PostList} />
             <Route exact={true} path="/posts/:id" component={Post} />
             <Route exact={true} path="/login" component={LoginForm} />
+            <Route exact={true} path="/newpost" component={PostForm} />
             <Route component={() => "404"} />
           </Switch>
         </Container>
