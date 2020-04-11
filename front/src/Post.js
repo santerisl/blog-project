@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import './Post.css'
+import Card from 'react-bootstrap/Card';
 
 const fetchPost = async (id) => {
   const hr = await fetch(`/api/posts/${id}`)
@@ -16,6 +16,7 @@ const fetchPost = async (id) => {
 class Post extends Component {
 
   state = {
+    loading: true,
     post: {}
   }
 
@@ -25,29 +26,35 @@ class Post extends Component {
   
   componentDidMount() {
     if(this.props.post) {
-      this.setState({post: this.props.post})
+      this.setState({post: this.props.post, loading: false})
     } else if(this.props.match.params.id) {
       fetchPost(this.props.match.params.id)
-        .then(post => this.setState({post: post}))
+        .then(post => this.setState({post: post, loading: false}))
     }
   }
 
   render() {
-    console.log(this.props)
-    if(this.state.post) {
+    console.log(this.state.post)
+    if(!this.state.loading) {
       const post = this.state.post; 
       const content = this.props.brief ? post.brief : post.content
       const date = new Date(post.date).toLocaleDateString('fi')
       return (
-        <article className="Post">
-          <div className="PostHeader">
-            <h1 className="PostTitle">{post.title}</h1>
-            <div className="PostDate">{date}</div>
-          </div>
-          <div className="PostAuthor">{post.author}</div>
-          <div className="PostContent">{content}</div>
-          {this.props.children}
-        </article>
+        <Card className="h-100">
+          <Card.Body>
+            <Card.Title>{post.title}</Card.Title>
+            <Card.Subtitle className="mb-2 text-muted">
+              {post.author}
+            </Card.Subtitle>
+            <Card.Text className="post-content">
+              {content}
+            </Card.Text>
+            
+          </Card.Body>
+          <Card.Footer className="text-muted">
+            {date} {this.props.children}
+          </Card.Footer>
+        </Card>
       )
     } else {
       return <div>Loading... :)</div>

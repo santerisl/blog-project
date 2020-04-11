@@ -1,5 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+
+import { LinkContainer } from 'react-router-bootstrap'
+
+import Card from 'react-bootstrap/Card';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import Post from './Post.js'
 
 const fetchPosts = async () => {
@@ -20,13 +27,21 @@ class PostList extends React.Component {
 
   render() {
     return (
-    <div className="Posts">
-      {this.state.posts.map(post =>
-          <Post key={post.id} brief={true} post={post}>
-            <Link to={`/posts/${post.id}`}>Read more...</Link>
-          </Post>)
-      }
-    </div>
+      <Container>
+        <Row>
+          {this.state.posts.map(post =>
+            <Col md={6} className="my-2">
+              <Post key={post.id} brief={true} post={post}>
+                <LinkContainer to={`/posts/${post.id}`}>
+                  <Card.Link className="float-right">
+                    Read more...
+                  </Card.Link>
+                </LinkContainer>
+              </Post>
+            </Col>
+          )}
+        </Row>
+      </Container>
     )
   }
 }

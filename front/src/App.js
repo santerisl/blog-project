@@ -1,24 +1,29 @@
 import React, {Component} from 'react';
+import { Route, Switch } from 'react-router-dom'
+
+import Container from 'react-bootstrap/Container';
+
+import AppHeader from './AppHeader.js';
 import PostList from './PostList.js';
 import Post from './Post.js';
-import { Route, Link } from 'react-router-dom'
+import LoginForm from './Login.js';
 
 import './App.css'
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="AppHeader">
-          <h1>Blog</h1>
-        </header>
-        <div className="AppContent">
-          <Route exact={true} path="/" component={PostList} />
-          <Route exact={true} path="/posts/:id" component={Post} />
-        </div>
-        <footer className="AppFooter">
-          <p>helpDesk</p>
-        </footer>
+      <div>
+        <AppHeader />
+        <Container className="mt-2">
+          <Switch>
+            <Route exact={true} path="/" component={PostList} />
+            <Route exact={true} path="/posts/:id" component={Post} />
+            <Route exact={true} path="/login" component={LoginForm} />
+            <Route component={() => "404"} />
+          </Switch>
+        </Container>
       </div>
     )
   }
