@@ -30,8 +30,8 @@ class PostList extends React.Component {
       <Container>
         <Row>
           {this.state.posts.map(post =>
-            <Col md={6} className="my-2">
-              <Post key={post.id} brief={true} post={post}>
+            <Col key={post.id} md={6} className="my-2">
+              <Post brief={true} post={post}>
                 <LinkContainer to={`/posts/${post.id}`}>
                   <Card.Link className="float-right">
                     Read more...

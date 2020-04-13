@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import AdminPostActions from './admin/AdminPostActions.js'
+
 import Card from 'react-bootstrap/Card';
 
 const fetchPost = async (id) => {
@@ -34,7 +36,6 @@ class Post extends Component {
   }
 
   render() {
-    console.log(this.state.post)
     if(!this.state.loading) {
       const post = this.state.post; 
       const content = this.props.brief ? post.brief : post.content
@@ -54,6 +55,8 @@ class Post extends Component {
           <Card.Footer className="text-muted">
             {date} {this.props.children}
           </Card.Footer>
+
+          <AdminPostActions />
         </Card>
       )
     } else {

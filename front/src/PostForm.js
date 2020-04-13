@@ -30,7 +30,6 @@ class PostForm extends Component {
       content: el.content.value,
     }
     post(data).then((result) => {
-      console.log(result)
       this.setState({submitted: true})
     })
 

@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 
 import { LinkContainer } from 'react-router-bootstrap'
 
+import LoginButton from './LoginButton'
+
 import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
+
 
 class AppHeader extends Component {
   render() {
@@ -17,13 +19,7 @@ class AppHeader extends Component {
               <h1>helpDesk Blog</h1>
             </Navbar.Brand>
           </LinkContainer>
-            <Nav className="ml-auto">
-              <Nav.Item>
-                <LinkContainer to="/login">
-                  <Nav.Link>Login</Nav.Link>
-                </LinkContainer>
-              </Nav.Item>
-            </Nav>
+            <LoginButton />
           </Navbar>
         </Container>
       </div>
