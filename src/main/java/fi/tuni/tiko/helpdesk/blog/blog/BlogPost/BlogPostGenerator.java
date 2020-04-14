@@ -62,9 +62,7 @@ public class BlogPostGenerator {
             createTitle(4, 10),
             createTitle(12, 22),
             createContent(),
-            (int)(Math.random() * 100),
-            LocalDateTime.now(),
-            null
+            (int)(Math.random() * 100)
         );
     }
 }

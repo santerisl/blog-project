@@ -22,20 +22,18 @@ public class BlogPost {
 
     private int likes;
 
-    private LocalDateTime date;
+    private LocalDateTime date = LocalDateTime.now();
 
     private LocalDateTime modifiedDate;
 
     public BlogPost() {}
 
-    public BlogPost(String author, String title, String brief, String content, int likes, LocalDateTime date, LocalDateTime modifiedDate) {
+    public BlogPost(String author, String title, String brief, String content, int likes) {
         this.author = author;
         this.title = title;
         this.brief = brief;
         this.content = content;
         this.likes = likes;
-        this.date = date;
-        this.modifiedDate = modifiedDate;
     }
 
     public long getId() {
@@ -90,9 +88,6 @@ public class BlogPost {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
-    }
 
     public LocalDateTime getModifiedDate() {
         return modifiedDate;
