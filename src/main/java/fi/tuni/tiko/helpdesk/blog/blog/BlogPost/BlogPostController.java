@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 
 @CrossOrigin
 @RestController
@@ -49,6 +50,7 @@ public class BlogPostController {
             blogPost.setTitle(requestPost.getTitle());
             blogPost.setBrief(requestPost.getBrief());
             blogPost.setContent(requestPost.getContent());
+            blogPost.setModifiedDate(LocalDateTime.now());
             blogPostRepository.save(blogPost);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No blog post with id: " + blogId + ".", ex);
