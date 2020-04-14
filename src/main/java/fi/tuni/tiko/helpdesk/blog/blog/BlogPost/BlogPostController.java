@@ -22,11 +22,6 @@ public class BlogPostController {
             blogPostRepository.save(BlogPostGenerator.create());
         }
     }
-    
-    @PostMapping(value = "/posts/")
-    public void addBlogPost(@RequestBody BlogPost post) {
-        blogPostRepository.save(post);
-    }
 
     @GetMapping(value = "/posts/")
     public Iterable<BlogPost> getAllBlogPosts() {
@@ -37,6 +32,24 @@ public class BlogPostController {
     public BlogPost getBlogPost(@PathVariable long blogId) {
         try {
             return blogPostRepository.findById(blogId).get();
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No blog post with id: " + blogId + ".", ex);
+        }
+    }
+    
+    @PostMapping(value = "/posts/")
+    public void addBlogPost(@RequestBody BlogPost post) {
+        blogPostRepository.save(post);
+    }
+
+    @PutMapping(value = "/posts/{blogId}")
+    public void updateBlogPost(@RequestBody BlogPost requestPost, @PathVariable long blogId) {
+        try {
+            BlogPost blogPost = blogPostRepository.findById(blogId).get();
+            blogPost.setTitle(requestPost.getTitle());
+            blogPost.setBrief(requestPost.getBrief());
+            blogPost.setContent(requestPost.getContent());
+            blogPostRepository.save(blogPost);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No blog post with id: " + blogId + ".", ex);
         }
