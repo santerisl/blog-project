@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { LinkContainer } from 'react-router-bootstrap'
+import AdminPostActions from './admin/AdminPostActions.js'
 
-import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -25,6 +24,11 @@ class PostList extends React.Component {
     fetchPosts().then(posts => this.setState({posts: posts}))
   }
 
+  removePost = (id) => {
+    const posts = this.state.posts.filter((p) => p.id !== id)
+    this.setState({posts: posts})
+  }
+
   render() {
     return (
       <Container>
@@ -32,11 +36,7 @@ class PostList extends React.Component {
           {this.state.posts.map(post =>
             <Col key={post.id} md={6} className="my-2">
               <Post brief={true} post={post}>
-                <LinkContainer to={`/posts/${post.id}`}>
-                  <Card.Link className="float-right">
-                    Read more...
-                  </Card.Link>
-                </LinkContainer>
+                  <AdminPostActions id={post.id} onDelete={this.removePost} />
               </Post>
             </Col>
           )}

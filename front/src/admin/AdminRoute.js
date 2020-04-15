@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import { AdminContext } from './AdminContext'
 
 class AdminRoute extends Component {
 
   render() {
-    let ctx = this.context
-    let isLoggedIn = ctx.user.name
-
+    const ctx = this.context
+    const isLoggedIn = ctx.user.name !== undefined
     if(isLoggedIn) {
-        return this.props.children
+        return <Route {...this.props} />
     } else {
         return <Redirect to={{ pathname: '/login' }} /> 
     }

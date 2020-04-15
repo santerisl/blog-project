@@ -29,8 +29,8 @@ const Login = () => {
 class LoginButton extends Component {
 
   render() {
-    let ctx = this.context
-    let isLoggedIn = ctx.user.name && ctx.user.name != ''
+    const ctx = this.context
+    const isLoggedIn = ctx.user.name !== undefined
     return (
       <Nav className="ml-auto">
         <Nav.Item>

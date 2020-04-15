@@ -1,24 +1,8 @@
 import React, { Component } from 'react';
 
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-
-async function post(data) {
-  const response = await fetch('/api/posts/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  });
-  return response;
-}
 
 class PostForm extends Component {
-
-  state = {
-    submitted: false
-  }
 
   handleSubmit = (event) => {
     event.preventDefault()
@@ -29,38 +13,35 @@ class PostForm extends Component {
       author: el.author.value,
       content: el.content.value,
     }
-    post(data).then((result) => {
-      this.setState({submitted: true})
-    })
-
+    this.props.onSubmit(data)
   }
 
   render() {
+    const post = this.props.post || {}
     return (
       <Form className="p-4" onSubmit={this.handleSubmit}>
         <Form.Group controlId="title">
           <Form.Label>Title</Form.Label>
-          <Form.Control type="text" placeholder="Title" />
+          <Form.Control type="text" placeholder="Title" defaultValue={post.title} />
         </Form.Group>
 
         <Form.Group controlId="brief">
           <Form.Label>Brief</Form.Label>
-          <Form.Control type="text" placeholder="Blog post title" />
+          <Form.Control type="text" placeholder="Blog post brief" defaultValue={post.brief}/>
         </Form.Group>
 
         <Form.Group controlId="author">
           <Form.Label>Author</Form.Label>
-          <Form.Control type="textarea" placeholder="Author name" />
+          <Form.Control type="textarea" placeholder="Author name"  defaultValue={post.author}/>
         </Form.Group>
 
         <Form.Group controlId="content">
           <Form.Label>Content</Form.Label>
-          <Form.Control as="textarea" rows="3" />
+          <Form.Control as="textarea" rows="3" defaultValue={post.content} />
         </Form.Group>
 
-        <Button variant="primary" type="submit" disabled={this.state.submitted}>
-          {this.state.submitted ? 'Post sent' : 'Submit' }
-        </Button>
+        {this.props.children}
+
       </Form>
     )
   }
