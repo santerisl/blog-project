@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
@@ -39,8 +41,12 @@ public class BlogPostController {
     }
     
     @PostMapping(value = "/posts/")
-    public void addBlogPost(@RequestBody BlogPost post) {
+    public ResponseEntity<Void> addBlogPost(@RequestBody BlogPost post, UriComponentsBuilder b) {
         blogPostRepository.save(post);
+
+        UriComponents components = b.path("/posts/{blogId}").buildAndExpand(post.getId());
+
+        return ResponseEntity.status(HttpStatus.CREATED).location(components.toUri()).build();
     }
 
     @PutMapping(value = "/posts/{blogId}")
@@ -61,7 +67,7 @@ public class BlogPostController {
     public ResponseEntity<Void> deleteBlogPost(@PathVariable long blogId) {
         try {
             blogPostRepository.deleteById(blogId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No blog post with id: " + blogId + ".", ex);
         }
