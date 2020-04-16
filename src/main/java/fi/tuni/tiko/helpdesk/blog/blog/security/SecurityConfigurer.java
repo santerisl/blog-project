@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -27,14 +28,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                //"/", "/api/**"
-                .antMatchers("/securityNone").permitAll()
-                //.and()
-                //.antMatchers("/login").authenticated()
-                .anyRequest().authenticated()
+                .antMatchers("/", "/api/**").permitAll()
+                .antMatchers("/login").authenticated()
+                //.anyRequest().authenticated()
                 .and()
                 .httpBasic()
                 .authenticationEntryPoint(authenticationEntryPoint);
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 //        http.addFilterAfter(new CustomFilter(),
 //                BasicAuthenticationFilter.class);
