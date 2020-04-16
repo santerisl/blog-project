@@ -3,7 +3,6 @@ package fi.tuni.tiko.helpdesk.blog.blog.BlogPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponents;
@@ -40,8 +39,7 @@ public class BlogPostController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No blog post with id: " + blogId + ".", ex);
         }
     }
-
-    @Secured("ROLE_ADMIN")
+    
     @PostMapping(value = "/posts/")
     public ResponseEntity<Void> addBlogPost(@RequestBody BlogPost post, UriComponentsBuilder b) {
         blogPostRepository.save(post);
@@ -51,7 +49,6 @@ public class BlogPostController {
         return ResponseEntity.status(HttpStatus.CREATED).location(components.toUri()).build();
     }
 
-    @Secured("ROLE_ADMIN")
     @PutMapping(value = "/posts/{blogId}")
     public void updateBlogPost(@RequestBody BlogPost requestPost, @PathVariable long blogId) {
         try {
@@ -66,7 +63,6 @@ public class BlogPostController {
         }
     }
 
-    @Secured("ROLE_ADMIN")
     @DeleteMapping(value = "/posts/{blogId}")
     public ResponseEntity<Void> deleteBlogPost(@PathVariable long blogId) {
         try {
