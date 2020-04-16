@@ -27,19 +27,18 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+            .authorizeRequests()
                 .antMatchers("/", "/api/**").permitAll()
                 .antMatchers("/login").authenticated()
-                //.anyRequest().authenticated()
                 .and()
-                .httpBasic()
-                .authenticationEntryPoint(authenticationEntryPoint);
-//                .and()
-//                .sessionManagement()
-//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-//        http.addFilterAfter(new CustomFilter(),
-//                BasicAuthenticationFilter.class);
+            .httpBasic()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .and()
+            .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+            .csrf().disable();
     }
 
     @Bean
