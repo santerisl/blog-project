@@ -21,7 +21,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("admin").password(passwordEncoder().encode("admin"))
+                .withUser("ad2").password(passwordEncoder().encode("admin"))
                 .authorities("ROLE_ADMIN");
     }
 
@@ -29,15 +29,16 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/", "/api/**").permitAll()
-                .antMatchers("/login").authenticated()
+//                .antMatchers("/", "/api/**").permitAll()
+//                .antMatchers("/login").authenticated()
+                .anyRequest().authenticated()
                 .and()
             .httpBasic()
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .and()
-            .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
+//            .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
             .csrf().disable();
     }
 
