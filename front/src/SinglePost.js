@@ -28,7 +28,13 @@ class SinglePost extends React.Component {
   }
 
   removePost = (id) => {
-    this.props.history.push('/')
+    this.props.history.push({
+      pathname: '/',
+      state: { alert: {
+        variant: 'danger',
+        text: 'Removed post'
+      }}
+    })
   }
 
   render() {
