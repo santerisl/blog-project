@@ -7,8 +7,8 @@ class Alerts extends React.Component {
 
   render() {
     return (
-      this.props.alerts.map(alert =>
-        <DismissableAlert variant={alert.variant} text={alert.text} />
+      this.props.alerts.map((alert, id) =>
+        <DismissableAlert key={id} variant={alert.variant} text={alert.text} />
       )
     )
   }
