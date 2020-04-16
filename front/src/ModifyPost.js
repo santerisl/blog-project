@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import PostForm from './PostForm.js';
-import Button from 'react-bootstrap/Button';
 
 const fetchPost = async (id) => {
   const hr = await fetch(`/api/posts/${id}`)
@@ -44,9 +43,7 @@ class ModifyPost extends Component {
 
   render() {
     return (
-      <PostForm onSubmit={this.onSubmit} post={this.state.post}>
-        <Button variant="primary" type="submit">Save Changes</Button>
-      </PostForm>
+      <PostForm onSubmit={this.onSubmit} post={this.state.post} text='Save changes'/>
     )
   }
 }

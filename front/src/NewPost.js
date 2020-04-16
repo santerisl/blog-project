@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import PostForm from './PostForm.js';
-import Button from 'react-bootstrap/Button';
 
 async function post(data) {
   const response = await fetch('/api/posts/', {
@@ -16,23 +15,17 @@ async function post(data) {
 
 class NewPost extends Component {
 
-  state = {
-    submitted: false
-  }
-
   onSubmit = (data) => {
-    post(data).then((result) => {
-      this.setState({ submitted: true })
+    post(data).then((response) => {
+      const location = response.headers.get('Location')
+      const id  = location.split('/').pop()
+      this.props.history.push(`/posts/${id}`)
     })
   }
 
   render() {
     return (
-      <PostForm onSubmit={this.onSubmit}>
-        <Button variant="primary" type="submit" disabled={this.state.submitted}>
-          {this.state.submitted ? 'Post sent' : 'Submit' }
-        </Button>
-      </PostForm>
+      <PostForm onSubmit={this.onSubmit} text='Submit' />
     )
   }
 }
