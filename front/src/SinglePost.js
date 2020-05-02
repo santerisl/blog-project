@@ -2,7 +2,11 @@ import React from 'react';
 
 import AdminPostActions from './admin/AdminPostActions.js'
 
+import Comments from './Comments'
 import Post from './Post.js'
+
+import Container from 'react-bootstrap/Container';
+
 
 const fetchPost = async (id) => {
   const hr = await fetch(`/api/posts/${id}`)
@@ -14,6 +18,27 @@ const fetchPost = async (id) => {
 
   return data
 }
+
+const comments = [
+  {
+    id: 1,
+    author: 'Comment Author',
+    content: 'Comment content Commodo enim deserunt excepteur consectetur aliqua officia duis.',
+    date: Date.now()
+  },
+  {
+    id: 2,
+    author: 'Comment Author',
+    content: 'Comment content Commodo enim deserunt excepteur consectetur aliqua officia duis.',
+    date: Date.now()
+  },
+  {
+    id: 3,
+    author: 'Comment Author',
+    content: 'Comment content Commodo enim deserunt excepteur consectetur aliqua officia duis.',
+    date: Date.now()
+  }
+]
 
 class SinglePost extends React.Component {
 
@@ -39,10 +64,14 @@ class SinglePost extends React.Component {
 
   render() {
     const post = this.state.post
+    post.comments = comments;
     return (
-      <Post brief={false} post={post}>
-        <AdminPostActions id={post.id} onDelete={this.removePost} />
-      </Post>
+      <Container>
+        <Post brief={false} post={post}>
+          <AdminPostActions id={post.id} onDelete={this.removePost} />
+        </Post>
+        <Comments comments={post.comments} />
+      </Container>
     )
   }
 }
