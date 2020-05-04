@@ -34,27 +34,20 @@ public class CommentController {
 //        }
 //    }
 
-    @GetMapping(value = "/comments/{author}")
-    public Iterable<Comment> getCommentsByAuthor(@PathVariable String author) {
+    @GetMapping(value = "/comments/{postId}")
+    public Iterable<Comment> getCommentsByPost(@PathVariable long postId) {
         try {
-            return commentRepository.findByAuthor(author);
+            long blogPostId = blogPostRepository.findById(postId).get().getId();
+            return commentRepository.findByBlogPostId(blogPostId);
         } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No comments with author: " + author + ".", ex);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No comments in post with id: " + postId + ".", ex);
         }
     }
 
-//    @GetMapping(value = "/comments/{commentId}")
-//    public Iterable<Comment> getCommentsByPost(@PathVariable long postId) {
-//        try {
-//            BlogPost blogPost = blogPostRepository.findById(postId).get();
-//            return commentRepository.findCommentsByBlogPost(blogPost);
-//        } catch (Exception ex) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No comments in post with id: " + postId + ".", ex);
-//        }
-//    }
+    @PostMapping(value = "/comments/add/{blogPostId}")
+    public ResponseEntity<Void> addComment(@RequestBody Comment comment, @PathVariable long blogPostId, UriComponentsBuilder b) {
 
-    @PostMapping(value = "/comments/")
-    public ResponseEntity<Void> addComment(@RequestBody Comment comment, UriComponentsBuilder b) {
+        comment.setBlogPost(blogPostRepository.findById(blogPostId).get());
         commentRepository.save(comment);
 
         UriComponents components = b.path("/comments/{commentId}").buildAndExpand(comment.getId());

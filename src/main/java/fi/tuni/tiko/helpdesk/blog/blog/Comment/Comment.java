@@ -1,15 +1,20 @@
 package fi.tuni.tiko.helpdesk.blog.blog.Comment;
 
+import fi.tuni.tiko.helpdesk.blog.blog.BlogPost.BlogPost;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "comment")
 public class Comment {
 
     @Id
     @GeneratedValue
     private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "blogPost_id")
+    private BlogPost blogPost;
 
     private String author;
 
@@ -48,5 +53,13 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public BlogPost getBlogPost() {
+        return blogPost;
+    }
+
+    public void setBlogPost(BlogPost blogPost) {
+        this.blogPost = blogPost;
     }
 }
