@@ -62,7 +62,7 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).location(components.toUri()).build();
     }
 
-    @DeleteMapping(value = "/posts/{commentId}")
+    @DeleteMapping(value = "/comments/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable long commentId) {
         try {
             commentRepository.deleteById(commentId);
