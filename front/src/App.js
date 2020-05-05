@@ -21,7 +21,6 @@ class App extends Component {
 
   state = {
     user: {},
-    alerts: [{text: 'Hello'}, {text: 'World'}]
   }
 
   constructor(props) {
