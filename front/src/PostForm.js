@@ -62,7 +62,6 @@ class PostForm extends Component {
         <Button variant="primary" type="submit" >
           {this.props.text}
         </Button>
-
       </Form>
     )
   }
