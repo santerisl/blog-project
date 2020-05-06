@@ -1,35 +1,11 @@
 import React, { Component } from 'react';
+import Container from 'react-bootstrap/Container';
 
 import { AdminContext } from './admin/AdminContext'
-
-
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-
+import AdminCommentActions from './admin/AdminCommentActions'
 import CommentForm from './CommentForm'
-
-const Comment = (props) => {
-  const comment = props.comment;
-  const date = new Date(comment.date).toLocaleDateString('fi')
-  return (
-    <Card className="h-100">
-      <Card.Header>
-        {comment.author} - {date}
-      </Card.Header>
-      <Card.Body>
-        <Card.Text className="post-content">
-          {comment.content}
-        </Card.Text>
-      </Card.Body>
-    
-      {props.children}
-    
-    </Card>
-  )
-}
+import BlogCard from './BlogCard'
+import Comment from './Comment'
 
 async function postComment(data, id) {
   const response = await fetch(`/api/comments/add/${id}`, {
@@ -49,13 +25,6 @@ const fetchComments = async (id) => {
   return data
 }
 
-const deleteComment = async (id) => {
-  const response = await fetch(`/api/comments/${id}`, {
-    method: 'DELETE',
-  });
-  return response;
-}
-
 class Comments extends Component {
 
   state = {
@@ -64,52 +33,45 @@ class Comments extends Component {
 
   componentDidMount() {
     fetchComments(this.props.id).then((comments) => {
-      this.setState({comments: comments})
+      this.setState({ comments: comments })
     })
   }
 
-  onSubmit = (data) => {
+  onSubmit = (data, callback) => {
     postComment(data, this.props.id).then((response) => {
-      const location = response.headers.get('Location')
-      data.id = location.split('/').pop()
-      this.setState({comments: [data, ...this.state.comments]})
+      if(response.ok) {
+        const location = response.headers.get('Location')
+        data.id = location.split('/').pop()
+        this.setState({ comments: [...this.state.comments, data] })
+        callback(true)
+      } else {
+        callback(false)
+      }
     })
   }
 
-  onDelete = (id) => {
-    deleteComment(id).then((result) => {
+  removeComment = (id, ok) => {
+    if(ok) {
       const comments = this.state.comments.filter((c) => c.id !== id)
-      this.setState({comments: comments})
-    })
+      this.setState({ comments: comments })
+    }
   }
 
   render() {
     const comments = this.state.comments;
-    const isLoggedIn = this.context.user.name !== undefined
     return (
-      <Container>
-
-        <Row>
-          <Col className="my-4">
-            <CommentForm onSubmit={this.onSubmit} />
-          </Col>
-        </Row>
-
+      <div>
+        <Container className="mt-4">{comments.length > 0 ? 'Comments' : 'No comments'}</Container>
         {comments.map(comment =>
-          <Row key={comment.id}>
-            <Col className="my-2">
-              <Comment comment={comment}>
-                { isLoggedIn 
-                  ? <Button onClick={() => this.onDelete(comment.id)} variant="danger">
-                      Delete
-                    </Button>
-                  : null
-                }
-              </Comment>
-            </Col>
-          </Row>
+          <Comment comment={comment} key={comment.id}>
+            <AdminCommentActions id={comment.id} onDelete={this.removeComment} />
+          </Comment>
         )}
-      </Container>
+        <BlogCard
+          title="Add comment"
+          content={<CommentForm onSubmit={this.onSubmit} />}>
+        </BlogCard>
+      </div>
     )
   }
 }

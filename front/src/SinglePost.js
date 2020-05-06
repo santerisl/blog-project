@@ -2,11 +2,10 @@ import React from 'react';
 
 import AdminPostActions from './admin/AdminPostActions.js'
 
+import LoadingContainer from './LoadingContainer'
 import Comments from './Comments'
 import Post from './Post.js'
-
-import Container from 'react-bootstrap/Container';
-
+import Alerts from './Alerts.js'
 
 const fetchPost = async (id) => {
   const hr = await fetch(`/api/posts/${id}`)
@@ -15,7 +14,6 @@ const fetchPost = async (id) => {
   if (data.error) {
     data.title = data.status
   }
-
   return data
 }
 
@@ -23,7 +21,8 @@ class SinglePost extends React.Component {
 
   state = {
     loading: true,
-    post: {}
+    alerts: [],
+    post: {},
   }
 
   componentDidMount() {
@@ -31,26 +30,38 @@ class SinglePost extends React.Component {
       .then(post => this.setState({ post: post, loading: false }))
   }
 
-  removePost = (id) => {
-    this.props.history.push({
-      pathname: '/',
-      state: { alert: {
-        variant: 'danger',
-        text: 'Removed post'
-      }}
-    })
+  removePost = (id, ok) => {
+    if(ok) {
+      this.props.history.push({
+        pathname: '/',
+        state: {
+          alert: {
+            variant: 'danger',
+            text: 'Removed post'
+          }
+        }
+      })
+    } else {
+      this.setState({
+        alerts: [
+          ...this.state.alerts, { variant: 'danger', text: 'Failed to remove post' }]
+      })
+    }
   }
 
   render() {
+
     const post = this.state.post
     return (
-      <Container>
-        <Post brief={false} post={post}>
+      <LoadingContainer loading={this.state.loading}>
+        <Post brief={false} post={post} removing={this.state.removing}>
           <AdminPostActions id={post.id} onDelete={this.removePost} />
         </Post>
-        { post.id !== undefined ? <Comments id={post.id} /> : null }
-      </Container>
+        {post.id !== undefined ? <Comments id={post.id} /> : null}
+        <Alerts alerts={this.state.alerts} />
+      </LoadingContainer>
     )
+
   }
 }
 

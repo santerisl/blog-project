@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import { LinkContainer } from 'react-router-bootstrap'
-import Container from 'react-bootstrap/Container'
 import Card from 'react-bootstrap/Card';
+import BlogCard from './BlogCard'
 
 const ReadMoreButton = (props) => {
   return (
@@ -15,30 +15,18 @@ const ReadMoreButton = (props) => {
 }
 
 class Post extends Component {
-
   render() {
     const post = this.props.post;
     const content = this.props.brief ? post.brief : post.content
     const date = new Date(post.date).toLocaleDateString('fi')
     return (
-      <Container>
-        <Card className="h-100">
-          <Card.Body>
-            <Card.Title>{post.title}</Card.Title>
-            <Card.Subtitle className="mb-2 text-muted">
-              {post.author}
-            </Card.Subtitle>
-            <Card.Text className="post-content">
-              {content}
-            </Card.Text>
-          </Card.Body>
-          <Card.Footer className="text-muted">
-            {date} {this.props.brief ? <ReadMoreButton id={post.id} /> : null}
-          </Card.Footer>
+      <BlogCard
+        title={post.title}
+        subtitle={post.author}
+        content={content}
+        footer={<span>{date} {this.props.brief ? <ReadMoreButton id={post.id} /> : null}</span>}>
           {this.props.children}
-        </Card>
-      </Container>
-
+      </BlogCard>
     )
   }
 }

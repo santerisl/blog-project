@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 
-import { LinkContainer } from 'react-router-bootstrap'
-
 import AdminDropdown from './AdminDropdown'
 import Dropdown from 'react-bootstrap/Dropdown';
 
-async function deletePost(id) {
-  const response = await fetch(`/api/posts/${id}`, {
-    method: 'DELETE',
-  });
-  return response;
+const deleteComment = async (id) => {
+    const response = await fetch(`/api/comments/${id}`, {
+      method: 'DELETE',
+    });
+    return response;
 }
 
 class AdminPostActions extends Component {
@@ -18,18 +16,15 @@ class AdminPostActions extends Component {
 
   onDelete = () => {
     this.setState({loading: true})
-    deletePost(this.props.id).then((response) => {
-      this.props.onDelete(this.props.id, response.ok)
-      this.setState({loading: false})
+    deleteComment(this.props.id).then((response) => {
+        this.setState({loading: false})
+        this.props.onDelete(this.props.id, response.ok)
     })
   }
 
   render() {
     return (
       <AdminDropdown loading={this.state.loading}>
-          <LinkContainer to={`/modify/${this.props.id}`}>
-            <Dropdown.Item>Modify</Dropdown.Item>
-          </LinkContainer>
           <Dropdown.Item onClick={this.onDelete}>Delete</Dropdown.Item>
       </AdminDropdown>
     )

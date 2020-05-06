@@ -48,7 +48,8 @@ class App extends Component {
       localStorage.setItem('user', JSON.stringify(user));
       result(true)
     } else {
-      result(false)
+      setTimeout(() => result(false) , 1000)
+      //result(false)
     }
   }
 

@@ -1,65 +1,54 @@
 import React, { Component } from 'react';
 
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
+import LoadingButton from './LoadingButton'
 
-async function addComment(data, id) {
-  const response = await fetch(`/api/comments/${id}`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  });
-  return response;
-}
 
 class CommentForm extends Component {
 
   state = {
-    valid: false
+    valid: false,
+    loading: false,
+    validated: false
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
+    this.setState({ loading: false, validated: true })
     if (event.target.checkValidity()) {
+      event.persist()
+      this.setState({ loading: true })
       let el = event.target.elements
       let data = {
         author: el.author.value,
         content: el.content.value,
       }
-      this.props.onSubmit(data)
+      this.props.onSubmit(data, (success) => {
+        if (success) {
+          this.setState({ loading: false, validated: false })
+          el.author.value = ''
+          el.content.value = ''
+        }
+      })
     }
   }
 
   render() {
     return (
-      <Row>
-        <Col className="my-2">
-          <Form onSubmit={this.handleSubmit}>
-            <Card className="h-100">
-              <Card.Body>
-                <Card.Title>Comment!</Card.Title>
-                <Form.Group controlId="author">
-                  <Form.Label>Author</Form.Label>
-                  <Form.Control type="textarea" placeholder="Author name"
-                    required maxLength="255" />
-                </Form.Group>
-                <Form.Group controlId="content">
-                  <Form.Label>Content</Form.Label>
-                  <Form.Control as="textarea" rows="3" required />
-                </Form.Group>
-              </Card.Body>
-              <Card.Footer className="text-muted">
-                <Button variant="primary" type="submit">Comment!</Button>
-              </Card.Footer>
-            </Card>
-          </Form>
-        </Col>
-      </Row>
+      <Form onSubmit={this.handleSubmit} noValidate validated={this.state.validated}>
+        <Form.Group controlId="author">
+          <Form.Label>Author</Form.Label>
+          <Form.Control type="textarea" placeholder="Author name"
+            disabled={this.state.loading}
+            required maxLength="255" />
+        </Form.Group>
+        <Form.Group controlId="content">
+          <Form.Label>Content</Form.Label>
+          <Form.Control as="textarea" rows="3" required
+            disabled={this.state.loading} />
+        </Form.Group>
+        <LoadingButton variant="primary" type="submit" loading={this.state.loading}>Comment!</LoadingButton>
+      </Form>
     )
   }
 }
