@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 import { AdminContext } from './admin/AdminContext'
-
-
-import Container from 'react-bootstrap/Container'
-import Button from 'react-bootstrap/Button';
-
+import AdminDropdown from './admin/AdminDropdown'
 import CommentForm from './CommentForm'
 import BlogCard from './BlogCard'
 
@@ -68,7 +65,10 @@ class Comments extends Component {
   }
 
   onDelete = (id) => {
+    console.log('Delete')
+    console.log(id)
     deleteComment(id).then((result) => {
+      console.log(result)
       const comments = this.state.comments.filter((c) => c.id !== id)
       this.setState({ comments: comments })
     })
@@ -76,7 +76,6 @@ class Comments extends Component {
 
   render() {
     const comments = this.state.comments;
-    const isLoggedIn = this.context.user.name !== undefined
     return (
       <div>
         <BlogCard
@@ -85,11 +84,10 @@ class Comments extends Component {
         </BlogCard>
 
         {comments.map(comment =>
-          <Comment comment={comment}>
-            {isLoggedIn
-              ? <Button onClick={() => this.onDelete(comment.id)} 
-                  variant="danger">Delete</Button>
-              : null}
+          <Comment comment={comment} key={comment.id}>
+            <AdminDropdown>
+              <Dropdown.Item onClick={() => this.onDelete(comment.id)}>Delete</Dropdown.Item>
+            </AdminDropdown>
           </Comment>
         )}
       </div>
