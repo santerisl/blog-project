@@ -21,3 +21,7 @@ code {
 .post-content {
   white-space: pre-line;
 }
+
+.no-arrow::after {
+  display:none !important;
+}
