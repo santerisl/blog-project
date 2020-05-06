@@ -26,9 +26,14 @@ public class BlogPostController {
         }
     }
 
-    @GetMapping(value = "/posts/")
+    @GetMapping(value = "/posts/all")
     public Iterable<BlogPost> getAllBlogPosts() {
         return blogPostRepository.findAllByOrderByDateDesc();
+    }
+
+    @GetMapping(value = "/posts/")
+    public Iterable<BlogPostProjection> getAllBlogPostsTest() {
+        return blogPostRepository.findAllByOrderByDateDescId();
     }
 
     @GetMapping(value = "/posts/{blogId}")

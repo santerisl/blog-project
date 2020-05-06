@@ -8,4 +8,6 @@ public interface BlogPostRepository extends CrudRepository<BlogPost, Long> {
 
     List<BlogPost> findAllByOrderByDateDesc();
 
+    List<BlogPostProjection> findAllByOrderByDateDescId();
+
 }

@@ -30,6 +30,8 @@ public class BlogPost {
 
     private int likes;
 
+    private int commentCount;
+
     @OneToMany(mappedBy = "blogPost")
     private List<Comment> comments = new ArrayList<>();
 
@@ -41,6 +43,10 @@ public class BlogPost {
         this.brief = brief;
         this.content = content;
         this.likes = likes;
+    }
+
+    public void updateCommentCount() {
+        setCommentCount(comments.size());
     }
 
     public long getId() {
@@ -109,5 +115,13 @@ public class BlogPost {
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 }

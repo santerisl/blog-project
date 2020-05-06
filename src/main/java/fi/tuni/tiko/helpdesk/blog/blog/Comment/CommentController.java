@@ -38,8 +38,12 @@ public class CommentController {
     @PostMapping(value = "/comments/add/{blogPostId}")
     public ResponseEntity<Void> addComment(@RequestBody Comment comment, @PathVariable long blogPostId, UriComponentsBuilder b) {
 
-        comment.setBlogPost(blogPostRepository.findById(blogPostId).get());
+        BlogPost blogPost = blogPostRepository.findById(blogPostId).get();
+        comment.setBlogPost(blogPost);
         commentRepository.save(comment);
+
+        blogPost.updateCommentCount();
+        blogPostRepository.save(blogPost);
 
         UriComponents components = b.path("/comments/{commentId}").buildAndExpand(comment.getId());
 
