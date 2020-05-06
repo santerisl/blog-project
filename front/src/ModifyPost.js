@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import LoadingContainer from './LoadingContainer.js';
 import PostForm from './PostForm.js';
 
 const fetchPost = async (id) => {
@@ -27,12 +28,16 @@ async function modify(data, id) {
 class ModifyPost extends Component {
 
   state = {
-    post: {}
+    post: {},
+    loading: true
   }
 
   componentDidMount() {
     fetchPost(this.props.match.params.id)
-      .then(post => this.setState({ post: post }))
+      .then(post => this.setState({
+        post: post,
+        loading: false
+      }))
     }
 
   onSubmit = (data) => {
@@ -43,7 +48,9 @@ class ModifyPost extends Component {
 
   render() {
     return (
-      <PostForm onSubmit={this.onSubmit} post={this.state.post} text='Save changes'/>
+      <LoadingContainer loading={this.state.loading}>
+        <PostForm onSubmit={this.onSubmit} post={this.state.post} text='Save changes'/>
+      </LoadingContainer>
     )
   }
 }

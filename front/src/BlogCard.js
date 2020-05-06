@@ -5,8 +5,9 @@ import Card from 'react-bootstrap/Card';
 class BlogCard extends Component {
 
   render() {
+    const style = this.props.removing ? {borderColor: 'red'} : {}
     return (
-      <Card className="h-100 my-2">
+      <Card className="h-100 my-2" style={style}>
         <Card.Body>
           {this.props.title
             ? <Card.Title>{this.props.title}</Card.Title>

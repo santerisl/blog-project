@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import LoadingButton from './LoadingButton'
 
 class PostForm extends Component {
 
   state = {
-    valid: false
+    valid: false,
+    loading: false
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
     if(event.target.checkValidity()) {
+      this.setState({loading: true})
       let el = event.target.elements
       let data = {
         title: el.title.value,
@@ -59,9 +61,9 @@ class PostForm extends Component {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit" >
+        <LoadingButton variant="primary" type="submit" loading={this.state.loading}>
           {this.props.text}
-        </Button>
+        </LoadingButton>
       </Form>
     )
   }

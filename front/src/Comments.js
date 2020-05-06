@@ -1,23 +1,11 @@
 import React, { Component } from 'react';
-import Dropdown from 'react-bootstrap/Dropdown'
+import Container from 'react-bootstrap/Container';
 
 import { AdminContext } from './admin/AdminContext'
-import AdminDropdown from './admin/AdminDropdown'
+import AdminCommentActions from './admin/AdminCommentActions'
 import CommentForm from './CommentForm'
 import BlogCard from './BlogCard'
-
-const Comment = (props) => {
-  const comment = props.comment;
-  const date = new Date(comment.date).toLocaleDateString('fi')
-  return (
-    <BlogCard
-      subtitle={comment.author}
-      content={comment.content}
-      footer={date}>
-      {props.children}
-    </BlogCard>
-  )
-}
+import Comment from './Comment'
 
 async function postComment(data, id) {
   const response = await fetch(`/api/comments/add/${id}`, {
@@ -37,13 +25,6 @@ const fetchComments = async (id) => {
   return data
 }
 
-const deleteComment = async (id) => {
-  const response = await fetch(`/api/comments/${id}`, {
-    method: 'DELETE',
-  });
-  return response;
-}
-
 class Comments extends Component {
 
   state = {
@@ -56,40 +37,40 @@ class Comments extends Component {
     })
   }
 
-  onSubmit = (data) => {
+  onSubmit = (data, callback) => {
     postComment(data, this.props.id).then((response) => {
-      const location = response.headers.get('Location')
-      data.id = location.split('/').pop()
-      this.setState({ comments: [data, ...this.state.comments] })
+      if(response.ok) {
+        const location = response.headers.get('Location')
+        data.id = location.split('/').pop()
+        this.setState({ comments: [...this.state.comments, data] })
+        callback(true)
+      } else {
+        callback(false)
+      }
     })
   }
 
-  onDelete = (id) => {
-    console.log('Delete')
-    console.log(id)
-    deleteComment(id).then((result) => {
-      console.log(result)
+  removeComment = (id, ok) => {
+    if(ok) {
       const comments = this.state.comments.filter((c) => c.id !== id)
       this.setState({ comments: comments })
-    })
+    }
   }
 
   render() {
     const comments = this.state.comments;
     return (
       <div>
-        <BlogCard
-          title="Comment"
-          content={<CommentForm onSubmit={this.onSubmit} />}>
-        </BlogCard>
-
+        <Container className="mt-4">{comments.length > 0 ? 'Comments' : 'No comments'}</Container>
         {comments.map(comment =>
           <Comment comment={comment} key={comment.id}>
-            <AdminDropdown>
-              <Dropdown.Item onClick={() => this.onDelete(comment.id)}>Delete</Dropdown.Item>
-            </AdminDropdown>
+            <AdminCommentActions id={comment.id} onDelete={this.removeComment} />
           </Comment>
         )}
+        <BlogCard
+          title="Add comment"
+          content={<CommentForm onSubmit={this.onSubmit} />}>
+        </BlogCard>
       </div>
     )
   }

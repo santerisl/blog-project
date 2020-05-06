@@ -17,9 +17,11 @@ class NewPost extends Component {
 
   onSubmit = (data) => {
     post(data).then((response) => {
-      const location = response.headers.get('Location')
-      const id  = location.split('/').pop()
-      this.props.history.push(`/posts/${id}`)
+      if(response.ok) {
+        const location = response.headers.get('Location')
+        const id = location.split('/').pop()
+        this.props.history.push(`/posts/${id}`)
+      }
     })
   }
 

@@ -4,6 +4,7 @@ import { AdminContext } from './AdminContext'
 
 import Dropdown from 'react-bootstrap/Dropdown';
 import Image from 'react-bootstrap/Image';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 const style = {
@@ -22,7 +23,9 @@ class AdminDropdown extends Component {
         <div className="position-absolute" style={style}>
           <Dropdown alignRight>
             <Dropdown.Toggle variant="link" className="no-arrow">
-              <Image src="/settings-black.svg" alt="Settings" />
+              {this.props.loading
+                ? <Spinner variant="danger" animation="border" size="sm" />
+                : <Image src="/settings-black.svg" alt="Settings" /> }
             </Dropdown.Toggle>
             <Dropdown.Menu className="m-0">
                 {this.props.children}
