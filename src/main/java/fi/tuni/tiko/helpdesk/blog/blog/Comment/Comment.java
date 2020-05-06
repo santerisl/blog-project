@@ -14,7 +14,7 @@ public class Comment {
     @GeneratedValue
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blogPost_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private BlogPost blogPost;
@@ -58,11 +58,11 @@ public class Comment {
         this.content = content;
     }
 
-    public BlogPost getBlogPost() {
-        return blogPost;
-    }
-
     public void setBlogPost(BlogPost blogPost) {
         this.blogPost = blogPost;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
     }
 }

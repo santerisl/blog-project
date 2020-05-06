@@ -1,7 +1,11 @@
 package fi.tuni.tiko.helpdesk.blog.blog.BlogPost;
 
+import fi.tuni.tiko.helpdesk.blog.blog.Comment.Comment;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "blogPost")
@@ -20,11 +24,14 @@ public class BlogPost {
     @Lob
     private String content;
 
-    private int likes;
-
     private LocalDateTime date = LocalDateTime.now();
 
     private LocalDateTime modifiedDate;
+
+    private int likes;
+
+    @OneToMany(mappedBy = "blogPost")
+    private List<Comment> comments = new ArrayList<>();
 
     public BlogPost() {}
 
@@ -88,12 +95,19 @@ public class BlogPost {
         return date;
     }
 
-
     public LocalDateTime getModifiedDate() {
         return modifiedDate;
     }
 
     public void setModifiedDate(LocalDateTime modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

@@ -25,17 +25,8 @@ public class CommentController {
         return commentRepository.findAll();
     }
 
-//    @GetMapping(value = "/comments/{commentId}")
-//    public Comment getComment(@PathVariable long commentId) {
-//        try {
-//            return commentRepository.findById(commentId).get();
-//        } catch (Exception ex) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No comment with id: " + commentId + ".", ex);
-//        }
-//    }
-
     @GetMapping(value = "/comments/{postId}")
-    public Iterable<Comment> getCommentsByPost(@PathVariable long postId) {
+    public Iterable<Comment> getCommentsByBlogPostId(@PathVariable long postId) {
         try {
             long blogPostId = blogPostRepository.findById(postId).get().getId();
             return commentRepository.findByBlogPostId(blogPostId);
