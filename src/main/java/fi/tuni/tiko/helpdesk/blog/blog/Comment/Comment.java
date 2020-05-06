@@ -1,6 +1,8 @@
 package fi.tuni.tiko.helpdesk.blog.blog.Comment;
 
 import fi.tuni.tiko.helpdesk.blog.blog.BlogPost.BlogPost;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +16,7 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "blogPost_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private BlogPost blogPost;
 
     private String author;
