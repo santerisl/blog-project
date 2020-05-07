@@ -77,4 +77,15 @@ public class BlogPostController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No blog post with id: " + blogId + ".", ex);
         }
     }
+
+    @PutMapping(value = "/posts/{blogId}/like")
+    public void addLike(@PathVariable long blogId) {
+        try {
+            BlogPost blogPost = blogPostRepository.findById(blogId).get();
+            blogPost.setLikes(blogPost.getLikes() + 1);
+            blogPostRepository.save(blogPost);
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No blog post with id: " + blogId + ".", ex);
+        }
+    }
 }
