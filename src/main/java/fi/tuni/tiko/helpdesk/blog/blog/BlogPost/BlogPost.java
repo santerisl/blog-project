@@ -7,6 +7,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * <p>
+ *     Mobile Programming 1, 4A00CN42-3004, Spring 2020
+ * </p>
+ * @author Elias Pohjalainen,
+ * Business Information Systems, Tampere University of Applied Sciences.
+ * @author Santeri Saraluhta,
+ * Business Information Systems, Tampere University of Applied Sciences.
+ * @version 1.0
+ */
 @Entity
 @Table(name = "blogPost")
 public class BlogPost {
