@@ -13,7 +13,7 @@ const Logout = (props) => {
       <LinkContainer to="/new">
         <Button variant="success">New Post</Button>
       </LinkContainer>
-      <Nav.Link onClick={props.onClick}>Logout ({props.name})</Nav.Link>
+      <Nav.Link onClick={props.onClick}>Logout</Nav.Link>
     </Container>
   )
 }
@@ -34,7 +34,7 @@ class LoginButton extends Component {
     return (
       <Nav className="ml-auto">
         <Nav.Item>
-          { isLoggedIn ? <Logout onClick={ctx.logout} name={ctx.user.name}/> : <Login /> }
+          { isLoggedIn ? <Logout onClick={ctx.logout} /> : <Login /> }
         </Nav.Item>
       </Nav>
     )

@@ -42,6 +42,7 @@ class Comments extends Component {
       if(response.ok) {
         const location = response.headers.get('Location')
         data.id = location.split('/').pop()
+        data.date = Date.now()
         this.setState({ comments: [...this.state.comments, data] })
         callback(true)
       } else {

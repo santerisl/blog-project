@@ -25,3 +25,34 @@ code {
 .no-arrow::after {
   display:none !important;
 }
+
+
+.icon::before {
+  content: '';
+  display: inline-block;
+  margin-right: .25rem;
+  width: 1rem;
+  height: 1rem;
+  mask-size: 1rem;
+  background-color: #6c757d;
+}
+
+.icon.likes::before {
+  mask-image: url(/thumbup.svg);
+}
+.icon.comments::before {
+  mask-image: url(/comment.svg);
+}
+
+a.icon:hover {
+  cursor: pointer;
+  color: #007bff;
+}
+
+a.icon.active::before {
+  background-color: #28a745;
+}
+
+a.icon:hover::before {
+  background-color: #007bff;
+}

@@ -14,9 +14,6 @@ import LoginForm from './Login.js';
 
 import { AdminContext } from './admin/AdminContext';
 
-import './App.css'
-
-
 class App extends Component {
 
   state = {

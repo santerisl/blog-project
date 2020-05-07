@@ -19,11 +19,11 @@ class BlogCard extends Component {
             ? <Card.Text as="div" className="post-content">{this.props.content}</Card.Text>
             : null}
         </Card.Body>
-
+        {this.props.children}
+        
         {this.props.footer
             ? <Card.Footer className="text-muted">{this.props.footer}</Card.Footer>
             : null}
-        {this.props.children}
       </Card>
     )
   }
