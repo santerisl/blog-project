@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { LinkContainer } from 'react-router-bootstrap'
 import Row from 'react-bootstrap/Row';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import BlogCard from './BlogCard'
@@ -29,7 +28,6 @@ const ReadMoreButton = (props) => {
 }
 
 const DateTooltip = (props) => {
-  console.log(props, props.modified)
   return (
     <OverlayTrigger
       placement="top"

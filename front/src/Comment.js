@@ -21,6 +21,7 @@ class Comment extends Component {
 
   render() {
     const comment = this.props.comment;
+    console.log(comment)
     const date = new Date(comment.date).toLocaleDateString('fi')
     if(!this.state.removed) {
       return (
@@ -31,7 +32,7 @@ class Comment extends Component {
             content={comment.content}
             footer={date}>
             {this.props.children}
-            <AdminCommentActions id={comment.id} onDelete={this.removeComment} />
+            <AdminCommentActions id={comment.id} postId={comment.postId}onDelete={this.removeComment} />
           </BlogCard>
         </div>
       </Fade>

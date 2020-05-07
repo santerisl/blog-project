@@ -37,7 +37,7 @@ class Comments extends Component {
       <div>
         <Container className="mt-4">{comments.length > 0 ? 'Comments' : 'No comments'}</Container>
         {comments.map(comment =>
-          <Comment comment={comment} key={comment.id} 
+          <Comment comment={{...comment, postId: this.props.id}} key={comment.id} 
             onDelete={this.props.onDelete} />
         )}
         <BlogCard

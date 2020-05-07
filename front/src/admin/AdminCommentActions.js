@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import AdminDropdown from './AdminDropdown'
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const deleteComment = async (id) => {
-    const response = await fetch(`/api/comments/${id}`, {
+const deleteComment = async (blogId, id) => {
+    const response = await fetch(`/api/${blogId}/comments/${id}`, {
       method: 'DELETE',
     });
+    console.log(response)
     return response;
 }
 
@@ -15,8 +16,9 @@ class AdminPostActions extends Component {
   state = {loading: false}
 
   onDelete = () => {
+    console.log('delete', this.props)
     this.setState({loading: true})
-    deleteComment(this.props.id).then((response) => {
+    deleteComment(this.props.postId, this.props.id).then((response) => {
         this.setState({loading: false})
         this.props.onDelete(this.props.id, response.ok)
     })
