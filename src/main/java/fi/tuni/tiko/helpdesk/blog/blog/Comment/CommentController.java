@@ -50,10 +50,15 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).location(components.toUri()).build();
     }
 
-    @DeleteMapping(value = "/comments/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable long commentId) {
+    @DeleteMapping(value = "/{blogPostId}/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable long blogPostId, @PathVariable long commentId) {
         try {
+            BlogPost blogPost = blogPostRepository.findById(blogPostId).get();
+
             commentRepository.deleteById(commentId);
+            blogPost.updateCommentCount();
+            blogPostRepository.save(blogPost);
+
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No comment with id: " + commentId + ".", ex);
