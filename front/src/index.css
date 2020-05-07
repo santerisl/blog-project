@@ -44,15 +44,25 @@ code {
   mask-image: url(/comment.svg);
 }
 
-a.icon:hover {
+button.icon {
+  color: #6c757d;
+  border:0;
+}
+
+button.icon.active {
+  color: #28a745;
+}
+
+button.icon.active::before {
+  background-color: #28a745;
+}
+
+
+button.icon:not(.active):hover {
   cursor: pointer;
   color: #007bff;
 }
 
-a.icon.active::before {
-  background-color: #28a745;
-}
-
-a.icon:hover::before {
+button.icon:not(.active):hover::before {
   background-color: #007bff;
 }

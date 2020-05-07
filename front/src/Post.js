@@ -6,6 +6,16 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import BlogCard from './BlogCard'
 
+async function putLike(id) {
+  const response = await fetch(`/api/posts/${id}/like`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  return response;
+}
+
 const ReadMoreButton = (props) => {
   return (
     <LinkContainer to={`/posts/${props.id}`}>
@@ -17,10 +27,13 @@ const ReadMoreButton = (props) => {
 }
 
 const Footer = (props) => {
+  const likeClass = 'icon likes' + (props.liked ? ' active' : '')
   return (
     <Row className="post-footer">
       <Col className="text-center">
-        <a className="icon likes">{props.likes}</a>
+        <button className={likeClass} onClick={props.onLike}>
+          {props.likes}
+        </button>
       </Col>
       <Col className="text-center">
         <span className="icon comments">{props.comments}</span>
@@ -31,16 +44,42 @@ const Footer = (props) => {
 }
 
 class Post extends Component {
+  
+  state = {liked: false, like: 0}
+
+  componentDidMount() {
+    const liked = localStorage.getItem(`like:${this.props.post.id}`) || false
+    this.setState({liked: liked, likes: this.props.likes})
+  }
+
+  onLikeClick = (event) => {
+    event.preventDefault()
+    if(!this.state.liked) {
+      putLike(this.props.post.id).then((response) => {
+        if(response.ok) {
+          this.setState({liked: true, like: 1})
+          localStorage.setItem(`like:${this.props.post.id}`, true)
+        }
+      })
+    }
+  }
+  
   render() {
     const post = this.props.post;
     const content = this.props.brief ? post.brief : post.content
     const date = new Date(post.date).toLocaleDateString('fi')
+    console.log('likes', post.likes)
     return (
       <BlogCard
         title={post.title}
         subtitle={post.author}
         content={content}
-        footer={<Footer date={date} comments={post.commentCount} likes={post.likes} />}>
+        footer={
+          <Footer date={date} comments={post.commentCount} 
+            liked={this.state.liked}
+            likes={this.props.post.likes + this.state.like}
+            onLike={this.onLikeClick} />
+        }>
           {this.props.children}
           {this.props.brief ? <ReadMoreButton id={post.id} /> : null}
       </BlogCard>
