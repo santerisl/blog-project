@@ -47,6 +47,7 @@ code {
 button.icon {
   color: #6c757d;
   border:0;
+  background: none;
 }
 
 button.icon.active {
@@ -65,4 +66,25 @@ button.icon:not(.active):hover {
 
 button.icon:not(.active):hover::before {
   background-color: #007bff;
+}
+
+.card-link:visited {
+  color: #6c757d;
+}
+
+.card-link {
+  padding-top: 1rem;
+  margin-top: -2rem;
+  transition: padding .2s, box-shadow .2s;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+}
+
+.card-link:hover {
+  padding-top: .75rem;
+  padding-bottom: .25rem;
+  margin-top: -2rem;
+  box-shadow: inset 0 -1rem 2rem -2rem #6c757d;
 }
