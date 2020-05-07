@@ -20,10 +20,10 @@ const Footer = (props) => {
   return (
     <Row className="post-footer">
       <Col className="text-center">
-        <a class="icon likes">{props.likes}</a>
+        <a className="icon likes">{props.likes}</a>
       </Col>
       <Col className="text-center">
-        <span class="icon comments">{props.comments}</span>
+        <span className="icon comments">{props.comments}</span>
       </Col>
       <Col className="text-center">{props.date}</Col>
     </Row>

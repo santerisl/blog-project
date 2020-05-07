@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 
-import { AdminContext } from './admin/AdminContext'
-import AdminCommentActions from './admin/AdminCommentActions'
 import CommentForm from './CommentForm'
 import BlogCard from './BlogCard'
 import Comment from './Comment'
@@ -18,55 +16,29 @@ async function postComment(data, id) {
   return response;
 }
 
-const fetchComments = async (id) => {
-  const hr = await fetch(`/api/comments/${id}`)
-  const data = await hr.json();
-
-  return data
-}
-
 class Comments extends Component {
-
-  state = {
-    comments: []
-  }
-
-  componentDidMount() {
-    fetchComments(this.props.id).then((comments) => {
-      this.setState({ comments: comments })
-    })
-  }
-
   onSubmit = (data, callback) => {
     postComment(data, this.props.id).then((response) => {
       if(response.ok) {
         const location = response.headers.get('Location')
         data.id = location.split('/').pop()
         data.date = Date.now()
-        this.setState({ comments: [...this.state.comments, data] })
         callback(true)
+        this.props.onAdd(data)
       } else {
         callback(false)
       }
     })
   }
 
-  removeComment = (id, ok) => {
-    if(ok) {
-      const comments = this.state.comments.filter((c) => c.id !== id)
-      this.setState({ comments: comments })
-    }
-  }
-
   render() {
-    const comments = this.state.comments;
+    const comments = this.props.comments;
     return (
       <div>
         <Container className="mt-4">{comments.length > 0 ? 'Comments' : 'No comments'}</Container>
         {comments.map(comment =>
-          <Comment comment={comment} key={comment.id}>
-            <AdminCommentActions id={comment.id} onDelete={this.removeComment} />
-          </Comment>
+          <Comment comment={comment} key={comment.id} 
+            onDelete={this.props.onDelete} />
         )}
         <BlogCard
           title="Add comment"
@@ -76,7 +48,5 @@ class Comments extends Component {
     )
   }
 }
-
-Comments.contextType = AdminContext;
 
 export default Comments;

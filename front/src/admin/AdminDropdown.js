@@ -24,7 +24,7 @@ class AdminDropdown extends Component {
           <Dropdown alignRight>
             <Dropdown.Toggle variant="link" className="no-arrow">
               {this.props.loading
-                ? <Spinner variant="danger" animation="border" />
+                ? <Spinner variant="danger" animation="border" size="sm"/>
                 : <Image src="/settings.svg" alt="Settings" /> }
             </Dropdown.Toggle>
             <Dropdown.Menu className="m-0">

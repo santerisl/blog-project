@@ -1,19 +1,46 @@
 import React, { Component } from 'react';
+import AdminCommentActions from './admin/AdminCommentActions'
 
 import BlogCard from './BlogCard'
+import Fade from 'react-bootstrap/Fade';
+import DismissableAlert from './DismissableAlert';
 
 class Comment extends Component {
+  state = {visible: false, removed: false}
+
+  componentDidMount() {
+    this.setState({visible: true})
+  }
+
+  removeComment = (id, ok) => {
+    if(ok) {
+      this.setState({removed: true})
+      this.props.onDelete()
+    }
+  }
+
   render() {
     const comment = this.props.comment;
     const date = new Date(comment.date).toLocaleDateString('fi')
-    return (
-    <BlogCard
-      subtitle={comment.author}
-      content={comment.content}
-      footer={date}>
-      {this.props.children}
-    </BlogCard>
-  )
+    if(!this.state.removed) {
+      return (
+        <Fade in={this.state.visible && !this.state.removed}>
+        <div>
+          <BlogCard
+            subtitle={comment.author}
+            content={comment.content}
+            footer={date}>
+            {this.props.children}
+            <AdminCommentActions id={comment.id} onDelete={this.removeComment} />
+          </BlogCard>
+        </div>
+      </Fade>
+      )
+    } else {
+      return (
+        <DismissableAlert variant="danger" text="Comment Removed" />
+      )
+    }
   }
 }
 

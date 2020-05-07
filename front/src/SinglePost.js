@@ -22,12 +22,11 @@ class SinglePost extends React.Component {
   state = {
     loading: true,
     alerts: [],
-    post: {},
   }
 
   componentDidMount() {
     fetchPost(this.props.match.params.id)
-      .then(post => this.setState({ post: post, loading: false }))
+      .then(post => this.setState({...post, loading: false }))
   }
 
   removePost = (id, ok) => {
@@ -49,19 +48,32 @@ class SinglePost extends React.Component {
     }
   }
 
-  render() {
+  removeComment = () => {
+      this.setState({
+        commentCount: this.state.commentCount - 1
+      })
+  }
 
-    const post = this.state.post
+  addComment = (comment) => {
+    this.setState({
+      comments: [...this.state.comments, comment],
+      commentCount: this.state.commentCount + 1
+    })
+  }
+
+  render() {
+    const post = this.state
     return (
       <LoadingContainer loading={this.state.loading}>
         <Post brief={false} post={post} removing={this.state.removing}>
           <AdminPostActions id={post.id} onDelete={this.removePost} />
         </Post>
-        {post.id !== undefined ? <Comments id={post.id} /> : null}
+        <Comments id={post.id} comments={post.comments}
+          onDelete={this.removeComment}
+          onAdd={this.addComment} />
         <Alerts alerts={this.state.alerts} />
       </LoadingContainer>
     )
-
   }
 }
 
