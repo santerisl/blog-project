@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import { LinkContainer } from 'react-router-bootstrap'
 import Row from 'react-bootstrap/Row';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import BlogCard from './BlogCard'
@@ -26,6 +28,29 @@ const ReadMoreButton = (props) => {
   )
 }
 
+const DateTooltip = (props) => {
+  console.log(props, props.modified)
+  return (
+    <OverlayTrigger
+      placement="top"
+      delay={{ show: 100, hide: 0 }}
+      overlay={
+        <div className="date-tooltip">
+          <div><span>Posted:</span><span>{new Date(props.posted).toLocaleString('fi')}</span> </div>
+          {props.modified
+            ? <div><span>Modified:</span><span>{new Date(props.modified).toLocaleString('fi')}</span></div>
+            : null}
+        </div>
+      }>
+      <span>
+        {new Date(props.posted).toLocaleDateString('fi')}
+        {props.modified ? '*' : ''}
+      </span>
+    </OverlayTrigger>
+  )
+}
+
+
 const Footer = (props) => {
   const likeClass = 'icon likes' + (props.liked ? ' active' : '')
   return (
@@ -38,50 +63,51 @@ const Footer = (props) => {
       <Col className="text-center">
         <span className="icon comments">{props.comments}</span>
       </Col>
-      <Col className="text-center">{props.date}</Col>
+      <Col className="text-center">
+        <DateTooltip posted={props.posted} modified={props.modified} />
+      </Col>
     </Row>
   )
 }
 
 class Post extends Component {
-  
-  state = {liked: false, like: 0}
+
+  state = { liked: false, like: 0 }
 
   componentDidMount() {
     const liked = localStorage.getItem(`like:${this.props.post.id}`) || false
-    this.setState({liked: liked, likes: this.props.likes})
+    this.setState({ liked: liked, likes: this.props.likes })
   }
 
   onLikeClick = (event) => {
     event.preventDefault()
-    if(!this.state.liked) {
+    if (!this.state.liked) {
       putLike(this.props.post.id).then((response) => {
-        if(response.ok) {
-          this.setState({liked: true, like: 1})
+        if (response.ok) {
+          this.setState({ liked: true, like: 1 })
           localStorage.setItem(`like:${this.props.post.id}`, true)
         }
       })
     }
   }
-  
+
   render() {
     const post = this.props.post;
     const content = this.props.brief ? post.brief : post.content
-    const date = new Date(post.date).toLocaleDateString('fi')
-    console.log('likes', post.likes)
     return (
       <BlogCard
         title={post.title}
         subtitle={post.author}
         content={content}
         footer={
-          <Footer date={date} comments={post.commentCount} 
+          <Footer posted={this.props.post.date} modified={this.props.post.modifiedDate}
+            comments={post.commentCount}
             liked={this.state.liked}
             likes={this.props.post.likes + this.state.like}
             onLike={this.onLikeClick} />
         }>
-          {this.props.children}
-          {this.props.brief ? <ReadMoreButton id={post.id} /> : null}
+        {this.props.children}
+        {this.props.brief ? <ReadMoreButton id={post.id} /> : null}
       </BlogCard>
     )
   }
