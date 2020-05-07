@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 public interface BlogPostProjection {
 
+    long getId();
+
     String getAuthor();
 
     String getTitle();
