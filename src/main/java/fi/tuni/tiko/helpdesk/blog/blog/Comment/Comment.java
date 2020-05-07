@@ -7,24 +7,52 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Comment. Main component of the application. Stores likes and comments.
+ * <p>
+ *     Web App Development and Project, 4A00CN42-3004, Spring 2020
+ * </p>
+ * @author Elias Pohjalainen,
+ * Business Information Systems, Tampere University of Applied Sciences.
+ * @author Santeri Saraluhta,
+ * Business Information Systems, Tampere University of Applied Sciences.
+ * @version 1.0
+ */
 @Entity
 public class Comment {
 
+    /**
+     * Id of the comment.
+     */
     @Id
     @GeneratedValue
     private long id;
 
+    /**
+     * Blog post where the comment belongs.
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blogPost_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private BlogPost blogPost;
 
+    /**
+     * Author of the comment.
+     */
     private String author;
 
+    /**
+     * Content of the comment.
+     */
     @Lob
     private String content;
 
+    /**
+     * Creation date and time of the comment.
+     */
     private LocalDateTime date = LocalDateTime.now();
+
+    //Constructors
 
     public Comment() {
     }
@@ -33,6 +61,8 @@ public class Comment {
         this.author = author;
         this.content = content;
     }
+
+    //Getters and setters
 
     public long getId() {
         return id;

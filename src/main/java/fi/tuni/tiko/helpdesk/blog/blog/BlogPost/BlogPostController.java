@@ -3,7 +3,6 @@ package fi.tuni.tiko.helpdesk.blog.blog.BlogPost;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponents;
@@ -12,14 +11,31 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 
+/**
+ * Controller for blog post.
+ * <p>
+ *     Web App Development and Project, 4A00CN42-3004, Spring 2020
+ * </p>
+ * @author Elias Pohjalainen,
+ * Business Information Systems, Tampere University of Applied Sciences.
+ * @author Santeri Saraluhta,
+ * Business Information Systems, Tampere University of Applied Sciences.
+ * @version 1.0
+ */
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api")
 public class BlogPostController {
 
+    /**
+     * Blog post repository.
+     */
     @Autowired
     private BlogPostRepository blogPostRepository;
 
+    /**
+     * Initializes repository. Calls for dummy data.
+     */
     @PostConstruct
     public void initialize() {
         for(int i = 0; i < 10; i++) {
@@ -27,16 +43,29 @@ public class BlogPostController {
         }
     }
 
+    /**
+     * Gets all blog posts by newest first. Containing comments.
+     * @return all the blog posts.
+     */
     @GetMapping(value = "/posts/all")
     public Iterable<BlogPost> getAllBlogPosts() {
         return blogPostRepository.findAllByOrderByDateDesc();
     }
 
+    /**
+     * Gets all blog posts by newest first. Without comments.
+     * @return all the blog posts, without comments.
+     */
     @GetMapping(value = "/posts/")
-    public Iterable<BlogPostProjection> getAllBlogPostsTest() {
+    public Iterable<BlogPostProjection> getAllBlogPostsProjection() {
         return blogPostRepository.findAllByOrderByDateDescId();
     }
 
+    /**
+     * Gets blog post by ID.
+     * @param blogId ID of the blog post.
+     * @return blog post.
+     */
     @GetMapping(value = "/posts/{blogId}")
     public BlogPost getBlogPost(@PathVariable long blogId) {
         try {
@@ -46,6 +75,12 @@ public class BlogPostController {
         }
     }
 
+    /**
+     * Adds blog post to the repository.
+     * @param post Blog post.
+     * @param b Uri component builder.
+     * @return HTTP status.
+     */
     @PostMapping(value = "/posts/")
     public ResponseEntity<Void> addBlogPost(@RequestBody BlogPost post, UriComponentsBuilder b) {
         blogPostRepository.save(post);
@@ -55,6 +90,11 @@ public class BlogPostController {
         return ResponseEntity.status(HttpStatus.CREATED).location(components.toUri()).build();
     }
 
+    /**
+     * Modifies the blog post.
+     * @param requestPost Blog post.
+     * @param blogId ID of the blog post.
+     */
     @PutMapping(value = "/posts/{blogId}")
     public void updateBlogPost(@RequestBody BlogPost requestPost, @PathVariable long blogId) {
         try {
@@ -69,6 +109,11 @@ public class BlogPostController {
         }
     }
 
+    /**
+     * Deletes the blog post.
+     * @param blogId ID of the blog post.
+     * @return HTTP status.
+     */
     @DeleteMapping(value = "/posts/{blogId}")
     public ResponseEntity<Void> deleteBlogPost(@PathVariable long blogId) {
         try {
@@ -79,6 +124,10 @@ public class BlogPostController {
         }
     }
 
+    /**
+     * Adds one like to a blog post.
+     * @param blogId ID of the blog post.
+     */
     @PutMapping(value = "/posts/{blogId}/like")
     public void addLike(@PathVariable long blogId) {
         try {

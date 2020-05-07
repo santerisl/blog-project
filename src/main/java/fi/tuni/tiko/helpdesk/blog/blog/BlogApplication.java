@@ -3,6 +3,17 @@ package fi.tuni.tiko.helpdesk.blog.blog;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * Main class of the application.
+ * <p>
+ *     Web App Development and Project, 4A00CN42-3004, Spring 2020
+ * </p>
+ * @author Elias Pohjalainen,
+ * Business Information Systems, Tampere University of Applied Sciences.
+ * @author Santeri Saraluhta,
+ * Business Information Systems, Tampere University of Applied Sciences.
+ * @version 1.0
+ */
 @SpringBootApplication
 public class BlogApplication {
 

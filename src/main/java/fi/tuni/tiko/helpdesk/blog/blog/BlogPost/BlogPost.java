@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Blog post. Main component of the application. Stores likes and comments.
  * <p>
- *     Mobile Programming 1, 4A00CN42-3004, Spring 2020
+ *     Web App Development and Project, 4A00CN42-3004, Spring 2020
  * </p>
  * @author Elias Pohjalainen,
  * Business Information Systems, Tampere University of Applied Sciences.
@@ -22,29 +22,61 @@ import java.util.List;
 @Table(name = "blogPost")
 public class BlogPost {
 
+    /**
+     * Id of the blog post.
+     */
     @Id
     @GeneratedValue
     private long id;
 
+    /**
+     * Author of the blog post.
+     */
     private String author;
 
+    /**
+     * Title of the blog post.
+     */
     private String title;
 
+    /**
+     * A short brief for the blog post. Summarizes the content.
+     */
     private String brief;
 
+    /**
+     * Main content of the blog post.
+     */
     @Lob
     private String content;
 
+    /**
+     * Creation time of the blog post.
+     */
     private LocalDateTime date = LocalDateTime.now();
 
+    /**
+     * Edit date of the blog post.
+     */
     private LocalDateTime modifiedDate;
 
+    /**
+     * Amount of likes of the blog post.
+     */
     private int likes;
 
+    /**
+     * Amount of comments of the blog post.
+     */
     private int commentCount;
 
+    /**
+     * Comments of the blog post.
+     */
     @OneToMany(mappedBy = "blogPost")
     private List<Comment> comments = new ArrayList<>();
+
+    //Constructors
 
     public BlogPost() {}
 
@@ -56,9 +88,14 @@ public class BlogPost {
         this.likes = likes;
     }
 
+    /**
+     * Updates the count of comments.
+     */
     public void updateCommentCount() {
         setCommentCount(comments.size());
     }
+
+    //Getters and setters
 
     public long getId() {
         return id;
