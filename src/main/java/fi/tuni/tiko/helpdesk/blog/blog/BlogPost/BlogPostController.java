@@ -81,7 +81,7 @@ public class BlogPostController {
     public Map<String, Object> getBlogPost(@PathVariable long blogId) {
         try {
             Map<String,Object> map = new HashMap<>();
-            map.put("BlogPost", blogPostRepository.findById(blogId).get());
+            map.put("post", blogPostRepository.findById(blogId).get());
             map.put("prev", blogPostRepository.findFirstByIdBefore(blogId));
             map.put("next", blogPostRepository.findFirstByIdAfter(blogId));
             return map;
