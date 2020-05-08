@@ -10,6 +10,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller for blog post.
@@ -44,7 +46,7 @@ public class BlogPostController {
     }
 
     /**
-     * Gets all blog posts by newest first. Containing comments.
+     * Gets all blog posts by newest first. Containing every attribute.
      * @return all the blog posts.
      */
     @GetMapping(value = "/posts/all")
@@ -53,11 +55,11 @@ public class BlogPostController {
     }
 
     /**
-     * Gets all blog posts by newest first. Without comments.
+     * Gets all blog posts by newest first. Without comments and content.
      * @return all the blog posts, without comments.
      */
     @GetMapping(value = "/posts/")
-    public Iterable<BlogPostProjection> getAllBlogPostsProjection() {
+    public Iterable<BlogPostProjectionBasic> getAllBlogPostsProjection() {
         return blogPostRepository.findAllByOrderByDateDescId();
     }
 
@@ -66,10 +68,23 @@ public class BlogPostController {
      * @param blogId ID of the blog post.
      * @return blog post.
      */
-    @GetMapping(value = "/posts/{blogId}")
-    public BlogPost getBlogPost(@PathVariable long blogId) {
+    @GetMapping(value = "/posts/single/{blogId}")
+    public BlogPost getBlogPostSingle(@PathVariable long blogId) {
         try {
             return blogPostRepository.findById(blogId).get();
+        } catch (Exception ex) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No blog post with id: " + blogId + ".", ex);
+        }
+    }
+
+    @GetMapping(value = "/posts/{blogId}")
+    public Map<String, Object> getBlogPost(@PathVariable long blogId) {
+        try {
+            Map<String,Object> map = new HashMap<>();
+            map.put("BlogPost", blogPostRepository.findById(blogId).get());
+            map.put("prev", blogPostRepository.findFirstByIdBefore(blogId));
+            map.put("next", blogPostRepository.findFirstByIdAfter(blogId));
+            return map;
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No blog post with id: " + blogId + ".", ex);
         }

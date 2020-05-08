@@ -25,6 +25,10 @@ public interface BlogPostRepository extends CrudRepository<BlogPost, Long> {
     /**
      * @return List of all blog posts by newest first, without comments.
      */
-    List<BlogPostProjection> findAllByOrderByDateDescId();
+    List<BlogPostProjectionBasic> findAllByOrderByDateDescId();
+
+    BlogPostProjectionId findFirstByIdBefore(long blogPostId);
+
+    BlogPostProjectionId findFirstByIdAfter(long blogPostId);
 
 }

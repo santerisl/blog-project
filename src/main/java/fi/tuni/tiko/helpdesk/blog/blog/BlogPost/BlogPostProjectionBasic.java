@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * Business Information Systems, Tampere University of Applied Sciences.
  * @version 1.0
  */
-public interface BlogPostProjection {
+public interface BlogPostProjectionBasic {
 
     long getId();
 
