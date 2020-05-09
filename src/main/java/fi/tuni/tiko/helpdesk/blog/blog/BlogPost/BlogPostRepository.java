@@ -1,6 +1,7 @@
 package fi.tuni.tiko.helpdesk.blog.blog.BlogPost;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * Business Information Systems, Tampere University of Applied Sciences.
  * @version 1.0
  */
-public interface BlogPostRepository extends CrudRepository<BlogPost, Long> {
+public interface BlogPostRepository extends PagingAndSortingRepository<BlogPost, Long> {
 
     /**
      * @return List of all blog posts by newest first.
@@ -27,8 +28,19 @@ public interface BlogPostRepository extends CrudRepository<BlogPost, Long> {
      */
     List<BlogPostProjectionBasic> findAllByOrderByDateDescId();
 
+    /**
+     * @return Page of blog posts by newest first.
+     */
+    List<BlogPostProjectionBasic> findAllByOrderByDateDesc(Pageable pageable);
+
+    /**
+     * @return Previous blog post ID and tittle.
+     */
     BlogPostProjectionId findFirstByIdBefore(long blogPostId);
 
+    /**
+     * @return Next blog post ID and tittle.
+     */
     BlogPostProjectionId findFirstByIdAfter(long blogPostId);
 
 }

@@ -1,6 +1,7 @@
 package fi.tuni.tiko.helpdesk.blog.blog.BlogPost;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,7 +50,7 @@ public class BlogPostController {
      * Gets all blog posts by newest first. Containing every attribute.
      * @return all the blog posts.
      */
-    @GetMapping(value = "/posts/all")
+    @GetMapping(value = "/posts/all/detailed")
     public Iterable<BlogPost> getAllBlogPosts() {
         return blogPostRepository.findAllByOrderByDateDesc();
     }
@@ -58,9 +59,20 @@ public class BlogPostController {
      * Gets all blog posts by newest first. Without comments and content.
      * @return all the blog posts, without comments.
      */
-    @GetMapping(value = "/posts/")
+    @GetMapping(value = "/posts/all")
     public Iterable<BlogPostProjectionBasic> getAllBlogPostsProjection() {
         return blogPostRepository.findAllByOrderByDateDescId();
+    }
+
+    /**
+     * Gets set amount of blog posts from given page.
+     * @param page Page number.
+     * @return blog posts from given page.
+     */
+    @GetMapping(value = "/posts/")
+    @ResponseBody
+    public Iterable<BlogPostProjectionBasic> getBlogPostsByPage(@RequestParam(defaultValue = "0") int page) {
+        return blogPostRepository.findAllByOrderByDateDesc(PageRequest.of(page,5));
     }
 
     /**
