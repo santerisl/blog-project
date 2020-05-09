@@ -1,5 +1,9 @@
 package fi.tuni.tiko.helpdesk.blog.blog.BlogPost;
 
+import java.time.LocalDateTime;
+
+import fi.tuni.tiko.helpdesk.blog.blog.Comment.Comment;
+
 /**
  * Blog post generator. Generates dummy data when application starts.
  * <p>
@@ -65,13 +69,35 @@ public class BlogPostGenerator {
         return content;
     }
 
-    public static BlogPost create() {
-        return new BlogPost(
+    public static BlogPost create(int i) {
+        BlogPost p =  new BlogPost(
             createAuthor(),
             createTitle(4, 10),
             createTitle(12, 22),
             createContent(),
             (int)(Math.random() * 100)
         );
+        p.setCommentCount(Math.max((int)(Math.random() * 8) - 2, 0));
+        p.setDate(createDate(p.getDate(), -i-1, 96));
+        if(Math.random() > .85) {
+            p.setModifiedDate(createDate(p.getDate(), -i, 96));
+        }
+        return p;
+    }
+
+    public static Comment createComment(BlogPost post, int i) {
+        Comment c = new Comment(
+            createAuthor(),
+            paragraphs[(int)(Math.random() * paragraphs.length)]
+        );
+        c.setDate(createDate(post.getDate(), i, 4));
+        c.setBlogPost(post);
+        return c;
+    }
+
+    private static LocalDateTime createDate(LocalDateTime date, int offset, int hours) {
+        date = date.plusHours((offset * hours) + (int)(Math.random() * (hours)));
+        date = date.plusSeconds((int)(Math.random() * 3600));
+        return date;
     }
 }

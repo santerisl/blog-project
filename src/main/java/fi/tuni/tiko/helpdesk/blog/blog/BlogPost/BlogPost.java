@@ -145,6 +145,10 @@ public class BlogPost {
         this.likes = likes;
     }
 
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     public LocalDateTime getDate() {
         return date;
     }

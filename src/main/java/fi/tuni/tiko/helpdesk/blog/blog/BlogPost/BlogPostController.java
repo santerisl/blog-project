@@ -9,7 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,16 +36,6 @@ public class BlogPostController {
     private BlogPostRepository blogPostRepository;
 
     /**
-     * Initializes repository. Calls for dummy data.
-     */
-    @PostConstruct
-    public void initialize() {
-        for(int i = 0; i < 10; i++) {
-            blogPostRepository.save(BlogPostGenerator.create());
-        }
-    }
-
-    /**
      * Gets all blog posts by newest first. Containing every attribute.
      * @return all the blog posts.
      */
@@ -72,7 +61,7 @@ public class BlogPostController {
     @GetMapping(value = "/posts/")
     @ResponseBody
     public Iterable<BlogPostProjectionBasic> getBlogPostsByPage(@RequestParam(defaultValue = "0") int page) {
-        return blogPostRepository.findAllByOrderByDateDesc(PageRequest.of(page,5));
+        return blogPostRepository.findAllByOrderByDateDesc(PageRequest.of(page,10));
     }
 
     /**
