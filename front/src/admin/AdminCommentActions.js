@@ -7,7 +7,6 @@ const deleteComment = async (blogId, id) => {
     const response = await fetch(`/api/${blogId}/comments/${id}`, {
       method: 'DELETE',
     });
-    console.log(response)
     return response;
 }
 
@@ -16,7 +15,6 @@ class AdminPostActions extends Component {
   state = {loading: false}
 
   onDelete = () => {
-    console.log('delete', this.props)
     this.setState({loading: true})
     deleteComment(this.props.postId, this.props.id).then((response) => {
         this.setState({loading: false})

@@ -15,7 +15,6 @@ const fetchPost = async (id) => {
   if (data.error) {
     data.title = data.status
   }
-  console.log(data)
   return data
 }
 
@@ -31,7 +30,6 @@ class SinglePost extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log(this.props.match.params.id , prevProps.match.params.id)
     if(this.props.match.params.id !== prevProps.match.params.id) {
       this.loadPost()
     }

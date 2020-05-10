@@ -4,7 +4,7 @@ import LoadingContainer from '../elements/LoadingContainer.js';
 import PostForm from '../forms/PostForm.js';
 
 const fetchPost = async (id) => {
-  const hr = await fetch(`/api/posts/${id}`)
+  const hr = await fetch(`/api/posts/single/${id}`)
   const data = await hr.json();
 
   if (data.error) {
@@ -15,7 +15,7 @@ const fetchPost = async (id) => {
 }
 
 async function modify(data, id) {
-  const response = await fetch(`/api/posts/${id}`, {
+  const response = await fetch(`/api/posts/single/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -38,7 +38,7 @@ class ModifyPost extends Component {
         post: post,
         loading: false
       }))
-    }
+  }
 
   onSubmit = (data) => {
     modify(data, this.state.post.id).then((result) => {
@@ -49,7 +49,7 @@ class ModifyPost extends Component {
   render() {
     return (
       <LoadingContainer loading={this.state.loading}>
-        <PostForm onSubmit={this.onSubmit} post={this.state.post} text='Save changes'/>
+        <PostForm onSubmit={this.onSubmit} post={this.state.post} text='Save changes' />
       </LoadingContainer>
     )
   }
