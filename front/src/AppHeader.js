@@ -15,7 +15,7 @@ class AppHeader extends Component {
         <Container>
           <Navbar bg="dark" variant="dark">
           <LinkContainer to="/">
-            <Navbar.Brand href="/">
+            <Navbar.Brand>
               <h1>helpDesk Blog</h1>
             </Navbar.Brand>
           </LinkContainer>

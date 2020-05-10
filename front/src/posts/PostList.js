@@ -7,10 +7,11 @@ import Col from 'react-bootstrap/Col';
 
 import LoadingContainer from '../elements/LoadingContainer.js'
 import Alerts from '../elements/Alerts.js'
+import Pages from '../elements/Pages.js'
 import Post from './Post.js'
 
-const fetchPosts = async () => {
-  const hr = await fetch('/api/posts/')
+const fetchPosts = async (page) => {
+  const hr = await fetch(`/api/posts/?page=${page}`)
   const data = await hr.json();
   return data
 }
@@ -23,11 +24,7 @@ class PostList extends React.Component {
   }
 
   componentDidMount() {
-    fetchPosts().then(result => this.setState({
-      posts: result.posts,
-      loading: false
-    }))
-
+    this.updatePage()
     if (this.props.location.state && this.props.location.state.alert) {
       const alert = this.props.location.state.alert;
       this.props.history.replace({
@@ -38,6 +35,22 @@ class PostList extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if(this.props.match.params.page !== prevProps.match.params.page) {
+      this.updatePage()
+    }
+  }
+
+  updatePage = () => {
+    const page = this.props.match.params.page !== undefined 
+      ? this.props.match.params.page - 1
+      : 0
+    this.setState({loading: true})
+    fetchPosts(page).then(result => this.setState({
+      ...result,
+      loading: false
+    }))
+  }
 
   removePost = (id, ok) => {
     if (ok) {
@@ -68,6 +81,10 @@ class PostList extends React.Component {
           )}
         </Row>
         <Alerts alerts={this.state.alerts} />
+        <Pages 
+          pages={this.state.pages}
+          page={this.state.page !== undefined ? this.state.page : 1}
+          onPageChange={this.updatePage} />
       </LoadingContainer>
     )
   }

@@ -65,7 +65,7 @@ public class BlogPostController {
         Page<BlogPostProjectionBasic> blogPage = blogPostRepository.findAllByOrderByDateDesc(PageRequest.of(page,10));
         Map<String,Object> map = new HashMap<>();
         map.put("posts", blogPage.get());
-        map.put("page", blogPage.getNumber());
+        map.put("page", blogPage.getNumber()+1);
         map.put("pages", blogPage.getTotalPages());
         
         return map;

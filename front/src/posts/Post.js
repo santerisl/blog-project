@@ -34,9 +34,16 @@ const DateTooltip = (props) => {
       delay={{ show: 100, hide: 0 }}
       overlay={
         <div className="date-tooltip">
-          <div><span>Posted:</span><span>{new Date(props.posted).toLocaleString('fi')}</span> </div>
+          <div><span>Posted:</span><span>
+            {new Date(props.posted).toLocaleString('fi')}
+          </span></div>
           {props.modified
-            ? <div><span>Modified:</span><span>{new Date(props.modified).toLocaleString('fi')}</span></div>
+            ? <div>
+                <span>Modified:</span>
+                <span>
+                  {new Date(props.modified).toLocaleString('fi')}
+                </span>
+              </div>
             : null}
         </div>
       }>

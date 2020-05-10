@@ -14,7 +14,6 @@ const fetchPost = async (id) => {
   if (data.error) {
     data.title = data.status
   }
-  console.log(data)
   return data
 }
 
@@ -64,7 +63,6 @@ class SinglePost extends React.Component {
 
   render() {
     const post = this.state
-    console.log(post.comments)
     return (
       <LoadingContainer loading={this.state.loading}>
         <Post brief={false} post={post} removing={this.state.removing}>

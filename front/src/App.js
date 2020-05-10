@@ -60,13 +60,12 @@ class App extends Component {
         <AppHeader />
         <Container className="mt-2">
           <Switch>
-            <Route exact={true} path="/" component={PostList} />
-            <Route exact={true} path="/posts/:id" component={SinglePost} />
-            <Route exact={true} path="/login" component={LoginForm} />
-            
             <AdminRoute exact={true} path="/modify/:id" component={ModifyPost} />
             <AdminRoute exact={true} path="/new" component={NewPost} />
-
+            
+            <Route exact={true} path="/posts/:id" component={SinglePost} />
+            <Route exact={true} path="/login" component={LoginForm} />
+            <Route exact={true} path="/(page)?/:page?" component={PostList} />
             <Route component={() => "404"} />
           </Switch>
         </Container>

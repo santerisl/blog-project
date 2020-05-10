@@ -103,3 +103,12 @@ button.icon:not(.active):hover::before {
 .date-tooltip span:last-child {
   float: right;
 }
+
+.pages a.active {
+  cursor: default;
+  color: #b8c1c9;
+}
+
+.pages a:not(.active):hover {
+  text-decoration: underline;
+}
