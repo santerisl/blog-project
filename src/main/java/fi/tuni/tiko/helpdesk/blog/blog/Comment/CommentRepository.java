@@ -17,8 +17,15 @@ import java.util.List;
  */
 public interface CommentRepository extends CrudRepository<Comment, Long> {
 
+    /**
+     * @return List of all comments.
+     */
     List<Comment> findAll();
 
+    /**
+     * @param blogPostId Blog post ID.
+     * @return List of comments from given blog post.
+     */
     List<Comment> findByBlogPostId(long blogPostId);
 
 }
