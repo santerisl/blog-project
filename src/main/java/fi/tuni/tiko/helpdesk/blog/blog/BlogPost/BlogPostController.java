@@ -89,9 +89,10 @@ public class BlogPostController {
     public Map<String, Object> getBlogPost(@PathVariable long blogId) {
         try {
             Map<String,Object> map = new HashMap<>();
-            map.put("post", blogPostRepository.findById(blogId).get());
-            map.put("prev", blogPostRepository.findFirstByIdBefore(blogId));
-            map.put("next", blogPostRepository.findFirstByIdAfter(blogId));
+            BlogPost post = blogPostRepository.findById(blogId).get();
+            map.put("post", post);
+            map.put("prev", blogPostRepository.findFirstByIdBeforeOrderByDateDesc(blogId));
+            map.put("next", blogPostRepository.findFirstByIdAfterOrderByDateAsc(blogId));
             return map;
         } catch (Exception ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No blog post with id: " + blogId + ".", ex);

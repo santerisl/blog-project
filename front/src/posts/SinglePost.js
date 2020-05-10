@@ -6,6 +6,7 @@ import LoadingContainer from '../elements/LoadingContainer'
 import Comments from './Comments'
 import Post from './Post.js'
 import Alerts from '../elements/Alerts.js'
+import PostNavigation from '../elements/PostNavigation.js'
 
 const fetchPost = async (id) => {
   const hr = await fetch(`/api/posts/${id}`)
@@ -14,6 +15,7 @@ const fetchPost = async (id) => {
   if (data.error) {
     data.title = data.status
   }
+  console.log(data)
   return data
 }
 
@@ -25,8 +27,25 @@ class SinglePost extends React.Component {
   }
 
   componentDidMount() {
+    this.loadPost()
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log(this.props.match.params.id , prevProps.match.params.id)
+    if(this.props.match.params.id !== prevProps.match.params.id) {
+      this.loadPost()
+    }
+  }
+
+  loadPost() {
+    this.setState({loading: true})
     fetchPost(this.props.match.params.id)
-      .then(result => this.setState({...result.post, loading: false }))
+    .then(result => this.setState({
+      ...result.post,
+      loading: false,
+      next: result.next,
+      prev: result.prev
+    }))
   }
 
   removePost = (id, ok) => {
@@ -68,6 +87,7 @@ class SinglePost extends React.Component {
         <Post brief={false} post={post} removing={this.state.removing}>
           <AdminPostActions id={post.id} onDelete={this.removePost} />
         </Post>
+        <PostNavigation next={this.state.next} prev={this.state.prev} />
         <Comments id={post.id} comments={post.comments}
           onDelete={this.removeComment}
           onAdd={this.addComment} />

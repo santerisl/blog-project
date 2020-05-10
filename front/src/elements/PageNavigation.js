@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import Card from 'react-bootstrap/Card';
 import Nav from 'react-bootstrap/Nav';
 
-class Pages extends React.Component {
+class PageNavigation extends React.Component {
 
   render() {
     const links = [];
@@ -30,4 +30,4 @@ class Pages extends React.Component {
   }
 }
 
-export default Pages;
+export default PageNavigation;

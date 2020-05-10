@@ -37,11 +37,11 @@ public interface BlogPostRepository extends PagingAndSortingRepository<BlogPost,
     /**
      * @return Previous blog post ID and tittle.
      */
-    BlogPostProjectionId findFirstByIdBefore(long blogPostId);
+    BlogPostProjectionId findFirstByIdBeforeOrderByDateDesc(long blogPostId);
 
     /**
      * @return Next blog post ID and tittle.
      */
-    BlogPostProjectionId findFirstByIdAfter(long blogPostId);
+    BlogPostProjectionId findFirstByIdAfterOrderByDateAsc(long blogPostId);
 
 }

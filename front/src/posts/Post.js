@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 
-import { LinkContainer } from 'react-router-bootstrap'
 import Row from 'react-bootstrap/Row';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
 import BlogCard from '../elements/BlogCard'
+import ReadMoreButton from '../elements/ReadMoreButton'
 
 async function putLike(id) {
   const response = await fetch(`/api/posts/${id}/like`, {
@@ -15,16 +14,6 @@ async function putLike(id) {
     }
   });
   return response;
-}
-
-const ReadMoreButton = (props) => {
-  return (
-    <LinkContainer to={`/posts/${props.id}`}>
-      <Card.Link className="text-center">
-        Read more...
-      </Card.Link>
-    </LinkContainer>
-  )
 }
 
 const DateTooltip = (props) => {

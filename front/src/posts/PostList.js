@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 
 import LoadingContainer from '../elements/LoadingContainer.js'
 import Alerts from '../elements/Alerts.js'
-import Pages from '../elements/Pages.js'
+import PageNavigation from '../elements/PageNavigation.js'
 import Post from './Post.js'
 
 const fetchPosts = async (page) => {
@@ -81,7 +81,7 @@ class PostList extends React.Component {
           )}
         </Row>
         <Alerts alerts={this.state.alerts} />
-        <Pages 
+        <PageNavigation 
           pages={this.state.pages}
           page={this.state.page !== undefined ? this.state.page : 1}
           onPageChange={this.updatePage} />
