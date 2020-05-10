@@ -1,12 +1,7 @@
 package fi.tuni.tiko.helpdesk.blog.blog.Comment;
 
 import fi.tuni.tiko.helpdesk.blog.blog.BlogPost.BlogPost;
-import fi.tuni.tiko.helpdesk.blog.blog.BlogPost.BlogPostGenerator;
 import fi.tuni.tiko.helpdesk.blog.blog.BlogPost.BlogPostRepository;
-
-import java.util.List;
-
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

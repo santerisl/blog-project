@@ -80,7 +80,7 @@ public class BlogPostGenerator {
         p.setCommentCount(Math.max((int)(Math.random() * 8) - 2, 0));
         p.setDate(createDate(p.getDate(), -i-1, 96));
         if(Math.random() > .85) {
-            p.setModifiedDate(createDate(p.getDate(), -i, 96));
+            p.setModifiedDate(createDate(p.getDate(), 1, 96));
         }
         return p;
     }

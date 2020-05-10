@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import fi.tuni.tiko.helpdesk.blog.blog.BlogPost.BlogPost;
 import fi.tuni.tiko.helpdesk.blog.blog.BlogPost.BlogPostGenerator;
 import fi.tuni.tiko.helpdesk.blog.blog.BlogPost.BlogPostRepository;
-import fi.tuni.tiko.helpdesk.blog.blog.Comment.Comment;
 import fi.tuni.tiko.helpdesk.blog.blog.Comment.CommentRepository;
 
 @Component
