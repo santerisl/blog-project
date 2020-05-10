@@ -14,6 +14,7 @@ const fetchPost = async (id) => {
   if (data.error) {
     data.title = data.status
   }
+  console.log(data)
   return data
 }
 
@@ -26,7 +27,7 @@ class SinglePost extends React.Component {
 
   componentDidMount() {
     fetchPost(this.props.match.params.id)
-      .then(post => this.setState({...post, loading: false }))
+      .then(result => this.setState({...result.post, loading: false }))
   }
 
   removePost = (id, ok) => {
@@ -63,6 +64,7 @@ class SinglePost extends React.Component {
 
   render() {
     const post = this.state
+    console.log(post.comments)
     return (
       <LoadingContainer loading={this.state.loading}>
         <Post brief={false} post={post} removing={this.state.removing}>

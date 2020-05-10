@@ -21,7 +21,6 @@ class Comment extends Component {
 
   render() {
     const comment = this.props.comment;
-    console.log(comment)
     const date = new Date(comment.date).toLocaleDateString('fi')
     if(!this.state.removed) {
       return (

@@ -10,7 +10,7 @@ import Alerts from './Alerts.js'
 import Post from './Post.js'
 
 const fetchPosts = async () => {
-  const hr = await fetch('/api/posts/')
+  const hr = await fetch('/api/posts/all')
   const data = await hr.json();
   return data
 }
