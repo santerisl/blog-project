@@ -10,7 +10,7 @@ import Alerts from '../elements/Alerts.js'
 import Post from './Post.js'
 
 const fetchPosts = async () => {
-  const hr = await fetch('/api/posts/all')
+  const hr = await fetch('/api/posts/')
   const data = await hr.json();
   return data
 }
@@ -23,8 +23,8 @@ class PostList extends React.Component {
   }
 
   componentDidMount() {
-    fetchPosts().then(posts => this.setState({
-      posts: posts,
+    fetchPosts().then(result => this.setState({
+      posts: result.posts,
       loading: false
     }))
 

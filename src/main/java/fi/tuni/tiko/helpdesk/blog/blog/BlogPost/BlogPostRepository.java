@@ -1,5 +1,6 @@
 package fi.tuni.tiko.helpdesk.blog.blog.BlogPost;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -31,7 +32,7 @@ public interface BlogPostRepository extends PagingAndSortingRepository<BlogPost,
     /**
      * @return Page of blog posts by newest first.
      */
-    List<BlogPostProjectionBasic> findAllByOrderByDateDesc(Pageable pageable);
+    Page<BlogPostProjectionBasic> findAllByOrderByDateDesc(Pageable pageable);
 
     /**
      * @return Previous blog post ID and tittle.

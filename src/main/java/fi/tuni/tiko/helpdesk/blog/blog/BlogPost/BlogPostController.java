@@ -1,6 +1,7 @@
 package fi.tuni.tiko.helpdesk.blog.blog.BlogPost;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,8 +61,14 @@ public class BlogPostController {
      */
     @GetMapping(value = "/posts/")
     @ResponseBody
-    public Iterable<BlogPostProjectionBasic> getBlogPostsByPage(@RequestParam(defaultValue = "0") int page) {
-        return blogPostRepository.findAllByOrderByDateDesc(PageRequest.of(page,10));
+    public Map<String, Object> getBlogPostsByPage(@RequestParam(defaultValue = "0") int page) {
+        Page<BlogPostProjectionBasic> blogPage = blogPostRepository.findAllByOrderByDateDesc(PageRequest.of(page,10));
+        Map<String,Object> map = new HashMap<>();
+        map.put("posts", blogPage.get());
+        map.put("page", blogPage.getNumber());
+        map.put("pages", blogPage.getTotalPages());
+        
+        return map;
     }
 
     /**
