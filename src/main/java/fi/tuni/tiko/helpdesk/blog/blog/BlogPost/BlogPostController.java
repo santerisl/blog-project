@@ -71,13 +71,18 @@ public class BlogPostController {
         return map;
     }
 
+    /**
+     * Gets blog posts by given search word.
+     * @param title Blog post title to search.
+     * @return blog posts containing given search word in their title.
+     */
     @GetMapping(value = "/search/")
     public Iterable<BlogPostProjectionBasic> getAllBlogPostsSearch(@RequestParam(defaultValue = "") String title) {
         return blogPostRepository.findByTitleContainingIgnoreCase(title);
     }
 
     /**
-     * Gets blog post by ID.
+     * Gets only a blog post by ID.
      * @param blogId ID of the blog post.
      * @return blog post.
      */
@@ -90,6 +95,11 @@ public class BlogPostController {
         }
     }
 
+    /**
+     * Gets blog post by ID, with information about next and previous blog post.
+     * @param blogId ID of the blog post.
+     * @return map containing blog post with previous and next blog post titles.
+     */
     @GetMapping(value = "/posts/{blogId}")
     public Map<String, Object> getBlogPost(@PathVariable long blogId) {
         try {

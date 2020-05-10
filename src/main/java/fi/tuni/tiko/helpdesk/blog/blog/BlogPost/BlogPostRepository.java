@@ -44,5 +44,9 @@ public interface BlogPostRepository extends PagingAndSortingRepository<BlogPost,
      */
     BlogPostProjectionId findFirstByIdAfterOrderByDateAsc(long blogPostId);
 
+    /**
+     * @param title Search word.
+     * @return Blog posts matching the search word.
+     */
     List<BlogPostProjectionBasic> findByTitleContainingIgnoreCase(String title);
 }

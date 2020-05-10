@@ -26,17 +26,31 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RequestMapping(value = "/api")
 public class CommentController {
 
+    /**
+     * Comment repository.
+     */
     @Autowired
     private CommentRepository commentRepository;
 
+    /**
+     * Blog post repository.
+     */
     @Autowired
     private BlogPostRepository blogPostRepository;
 
+    /**
+     * @return all comments.
+     */
     @GetMapping(value = "/comments/")
     public Iterable<Comment> getAllComments() {
         return commentRepository.findAll();
     }
 
+    /**
+     * Gets all comments by given blot post.
+     * @param postId blog post ID.
+     * @return comments of given blog post.
+     */
     @GetMapping(value = "/comments/{postId}")
     public Iterable<Comment> getCommentsByBlogPostId(@PathVariable long postId) {
         try {
@@ -47,6 +61,13 @@ public class CommentController {
         }
     }
 
+    /**
+     * Adds comment to a blog post.
+     * @param comment Comment.
+     * @param blogPostId ID of the blog post.
+     * @param b Uri component builder.
+     * @return
+     */
     @PostMapping(value = "/comments/add/{blogPostId}")
     public ResponseEntity<Void> addComment(@RequestBody Comment comment, @PathVariable long blogPostId, UriComponentsBuilder b) {
 
@@ -62,6 +83,12 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED).location(components.toUri()).build();
     }
 
+    /**
+     * Deletes a comment.
+     * @param blogPostId ID of the blog post.
+     * @param commentId ID of the comment.
+     * @return HTTP status.
+     */
     @DeleteMapping(value = "/{blogPostId}/comments/{commentId}")
     public ResponseEntity<Void> deleteComment(@PathVariable long blogPostId, @PathVariable long commentId) {
         try {

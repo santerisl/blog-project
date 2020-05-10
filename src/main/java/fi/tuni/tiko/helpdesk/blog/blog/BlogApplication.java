@@ -24,7 +24,9 @@ public class BlogApplication {
 		System.out.println("--Team members: Pohjalainen Elias, Saraluhta Santeri");
 		System.out.println("--Curl commands for testing:");
 		System.out.println("-Fetch all blog posts:");
-		System.out.println("curl -X GET localhost:8080/api/posts/");
+		System.out.println("curl -X GET localhost:8080/api/posts/all");
+		System.out.println("-Fetch blog posts from given page:");
+		System.out.println("curl -X GET localhost:8080/api/posts/?page=1");
 		System.out.println("-Fetch post by blog post ID:");
 		System.out.println("curl -X GET localhost:8080/api/posts/1");
 		System.out.println("-Post new blog post:");
