@@ -55,7 +55,7 @@ public class BlogPostGenerator {
             title += " ";
             wCount--;
         }
-        return title.substring(0, 1).toUpperCase() + title.substring(1);
+        return title.substring(0, 1).toUpperCase() + title.substring(1, Math.min(255, title.length()));
     }
 
     private static String createContent() {
