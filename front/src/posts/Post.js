@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import BlogCard from './BlogCard'
+import BlogCard from '../elements/BlogCard'
 
 async function putLike(id) {
   const response = await fetch(`/api/posts/${id}/like`, {

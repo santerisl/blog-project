@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import { LinkContainer } from 'react-router-bootstrap'
 
-import LoginButton from './LoginButton'
+import LoginButton from './elements/LoginButton'
 
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';

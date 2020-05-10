@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
-import LoadingContainer from './LoadingContainer.js';
-import PostForm from './PostForm.js';
+import LoadingContainer from '../elements/LoadingContainer.js';
+import PostForm from '../forms/PostForm.js';
 
 const fetchPost = async (id) => {
   const hr = await fetch(`/api/posts/${id}`)

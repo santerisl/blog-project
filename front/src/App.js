@@ -6,11 +6,11 @@ import Container from 'react-bootstrap/Container';
 
 import AdminRoute from './admin/AdminRoute.js';
 import AppHeader from './AppHeader.js';
-import PostList from './PostList.js';
-import SinglePost from './SinglePost.js';
-import NewPost from './NewPost.js';
-import ModifyPost from './ModifyPost.js';
-import LoginForm from './Login.js';
+import PostList from './posts/PostList.js';
+import SinglePost from './posts/SinglePost.js';
+import NewPost from './posts/NewPost.js';
+import ModifyPost from './posts/ModifyPost.js';
+import LoginForm from './forms/Login.js';
 
 import { AdminContext } from './admin/AdminContext';
 

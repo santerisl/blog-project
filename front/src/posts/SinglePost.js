@@ -1,11 +1,11 @@
 import React from 'react';
 
-import AdminPostActions from './admin/AdminPostActions.js'
+import AdminPostActions from '../admin/AdminPostActions.js'
 
-import LoadingContainer from './LoadingContainer'
+import LoadingContainer from '../elements/LoadingContainer'
 import Comments from './Comments'
 import Post from './Post.js'
-import Alerts from './Alerts.js'
+import Alerts from '../elements/Alerts.js'
 
 const fetchPost = async (id) => {
   const hr = await fetch(`/api/posts/${id}`)

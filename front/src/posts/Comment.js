@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import AdminCommentActions from './admin/AdminCommentActions'
+import AdminCommentActions from '../admin/AdminCommentActions'
 
-import BlogCard from './BlogCard'
+import BlogCard from '../elements/BlogCard'
 import Fade from 'react-bootstrap/Fade';
-import DismissableAlert from './DismissableAlert';
+import DismissableAlert from '../elements/DismissableAlert';
 
 class Comment extends Component {
   state = {visible: false, removed: false}

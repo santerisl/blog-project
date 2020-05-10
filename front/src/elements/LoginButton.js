@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AdminContext } from './admin/AdminContext'
+import { AdminContext } from '../admin/AdminContext'
 
 import { LinkContainer } from 'react-router-bootstrap'
 

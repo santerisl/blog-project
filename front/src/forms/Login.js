@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
-import { AdminContext } from './admin/AdminContext'
-import LoadingButton from './LoadingButton'
+import { AdminContext } from '../admin/AdminContext'
+import LoadingButton from '../elements/LoadingButton'
 
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Form from 'react-bootstrap/Form';
-import LoadingButton from './LoadingButton'
+import LoadingButton from '../elements/LoadingButton'
 
 class PostForm extends Component {
 

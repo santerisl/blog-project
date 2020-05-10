@@ -1,12 +1,12 @@
 import React from 'react';
 
-import AdminPostActions from './admin/AdminPostActions.js'
+import AdminPostActions from '../admin/AdminPostActions.js'
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import LoadingContainer from './LoadingContainer.js'
-import Alerts from './Alerts.js'
+import LoadingContainer from '../elements/LoadingContainer.js'
+import Alerts from '../elements/Alerts.js'
 import Post from './Post.js'
 
 const fetchPosts = async () => {

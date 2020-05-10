@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Container from 'react-bootstrap/Container';
 
-import CommentForm from './CommentForm'
-import BlogCard from './BlogCard'
+import CommentForm from '../forms/CommentForm'
+import BlogCard from '../elements/BlogCard'
 import Comment from './Comment'
 
 async function postComment(data, id) {

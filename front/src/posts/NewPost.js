@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import PostForm from './PostForm.js';
+import PostForm from '../forms/PostForm.js';
 
 async function post(data) {
   const response = await fetch('/api/posts/', {
