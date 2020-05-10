@@ -73,7 +73,7 @@ public class BlogPost {
     /**
      * Comments of the blog post.
      */
-    @OneToMany(mappedBy = "blogPost")
+    @OneToMany(mappedBy = "blogPost", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
     //Constructors

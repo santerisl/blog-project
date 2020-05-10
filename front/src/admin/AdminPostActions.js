@@ -6,9 +6,11 @@ import AdminDropdown from './AdminDropdown'
 import Dropdown from 'react-bootstrap/Dropdown';
 
 async function deletePost(id) {
+  console.log("delete", id)
   const response = await fetch(`/api/posts/${id}`, {
     method: 'DELETE',
   });
+  console.log(response)
   return response;
 }
 

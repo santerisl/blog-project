@@ -55,7 +55,7 @@ class PostList extends React.Component {
     const page = this.props.match.params.page !== undefined 
       ? this.props.match.params.page - 1
       : 0
-    this.setState({loading: true})
+    this.setState({loading: true, alerts: []})
     fetchPosts(page).then(result => this.setState({
       ...result,
       loading: false
@@ -95,10 +95,10 @@ class PostList extends React.Component {
         <SearchForm searching={this.state.search} 
           onSearch={this.search}
           onCancel={this.cancelSearch}/>
-        {this.state.posts.length === 0
-          ? <BlogCard content="No posts" />
-          : null}
         <LoadingContainer loading={this.state.loading}>
+          {this.state.posts.length === 0
+            ? <BlogCard content="No posts" />
+            : null}
           <Row>
             {this.state.posts.map(post =>
               <Col key={post.id} md={6} className="my-2">
@@ -108,12 +108,12 @@ class PostList extends React.Component {
               </Col>
             )}
           </Row>
-          <Alerts alerts={this.state.alerts} />
           {!this.state.search
            ? <PageNavigation 
               pages={this.state.pages}
               page={this.state.page !== undefined ? this.state.page : 1} />
             : null}
+          <Alerts alerts={this.state.alerts} />
           
         </LoadingContainer>
       </div>

@@ -15,7 +15,7 @@ const fetchPost = async (id) => {
 }
 
 async function modify(data, id) {
-  const response = await fetch(`/api/posts/single/${id}`, {
+  const response = await fetch(`/api/posts/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
