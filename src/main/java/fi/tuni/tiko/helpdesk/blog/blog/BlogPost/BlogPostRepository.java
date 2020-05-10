@@ -44,4 +44,5 @@ public interface BlogPostRepository extends PagingAndSortingRepository<BlogPost,
      */
     BlogPostProjectionId findFirstByIdAfterOrderByDateAsc(long blogPostId);
 
+    List<BlogPostProjectionBasic> findByTitleContainingIgnoreCase(String title);
 }

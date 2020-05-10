@@ -71,6 +71,11 @@ public class BlogPostController {
         return map;
     }
 
+    @GetMapping(value = "/search/")
+    public Iterable<BlogPostProjectionBasic> getAllBlogPostsSearch(@RequestParam(defaultValue = "") String title) {
+        return blogPostRepository.findByTitleContainingIgnoreCase(title);
+    }
+
     /**
      * Gets blog post by ID.
      * @param blogId ID of the blog post.

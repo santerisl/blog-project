@@ -5,13 +5,21 @@ import AdminPostActions from '../admin/AdminPostActions.js'
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+import BlogCard from '../elements/BlogCard.js'
 import LoadingContainer from '../elements/LoadingContainer.js'
 import Alerts from '../elements/Alerts.js'
 import PageNavigation from '../elements/PageNavigation.js'
 import Post from './Post.js'
+import SearchForm from '../forms/SearchForm.js'
 
 const fetchPosts = async (page) => {
   const hr = await fetch(`/api/posts/?page=${page}`)
+  const data = await hr.json();
+  return data
+}
+
+const searchPosts = async (title) => {
+  const hr = await fetch(`/api/search/?title=${title}`)
   const data = await hr.json();
   return data
 }
@@ -20,7 +28,8 @@ class PostList extends React.Component {
   state = {
     posts: [],
     alerts: [],
-    loading: true
+    loading: true,
+    search: false
   }
 
   componentDidMount() {
@@ -35,8 +44,9 @@ class PostList extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
-    if(this.props.match.params.page !== prevProps.match.params.page) {
+  componentDidUpdate(prevProps, prevState) {
+    if((!this.state.search && this.props.match.params.page !== prevProps.match.params.page)
+        || (!this.state.search && prevState.search)) {
       this.updatePage()
     }
   }
@@ -51,6 +61,17 @@ class PostList extends React.Component {
       loading: false
     }))
   }
+
+  search = (title) => {
+    this.setState({loading: true, search: true})
+    searchPosts(title).then(result => this.setState({
+      posts: result,
+      loading: false
+    }))
+  }
+  cancelSearch = () => {
+    this.setState({search: false})
+  } 
 
   removePost = (id, ok) => {
     if (ok) {
@@ -70,22 +91,32 @@ class PostList extends React.Component {
 
   render() {
     return (
-      <LoadingContainer loading={this.state.loading}>
-        <Row>
-          {this.state.posts.map(post =>
-            <Col key={post.id} md={6} className="my-2">
-              <Post brief={true} post={post}>
-                <AdminPostActions id={post.id} onDelete={this.removePost} />
-              </Post>
-            </Col>
-          )}
-        </Row>
-        <Alerts alerts={this.state.alerts} />
-        <PageNavigation 
-          pages={this.state.pages}
-          page={this.state.page !== undefined ? this.state.page : 1}
-          onPageChange={this.updatePage} />
-      </LoadingContainer>
+      <div>
+        <SearchForm searching={this.state.search} 
+          onSearch={this.search}
+          onCancel={this.cancelSearch}/>
+        {this.state.posts.length === 0
+          ? <BlogCard content="No posts" />
+          : null}
+        <LoadingContainer loading={this.state.loading}>
+          <Row>
+            {this.state.posts.map(post =>
+              <Col key={post.id} md={6} className="my-2">
+                <Post brief={true} post={post}>
+                  <AdminPostActions id={post.id} onDelete={this.removePost} />
+                </Post>
+              </Col>
+            )}
+          </Row>
+          <Alerts alerts={this.state.alerts} />
+          {!this.state.search
+           ? <PageNavigation 
+              pages={this.state.pages}
+              page={this.state.page !== undefined ? this.state.page : 1} />
+            : null}
+          
+        </LoadingContainer>
+      </div>
     )
   }
 }
